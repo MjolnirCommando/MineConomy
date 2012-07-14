@@ -295,7 +295,7 @@ public class GUI
         createbutton.addActionListener(new CreateListener());
         pane2.add(createbutton);
 
-        ImagePanel logo = new ImagePanel("gui/graphics/mineconomy.jpg", 250, 50);
+        ImagePanel logo = new ImagePanel("internal/gui/graphics/mineconomy.jpg", 250, 50);
         logo.setPreferredSize(new Dimension(250, 50));
         pane2.add(logo);
     }
