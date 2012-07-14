@@ -1,0 +1,7 @@
+.: MineConomy - Plugin Developer Info :.
+
+Version:                        1.4 STABLE
+Time of Last Edit:              Fri Jul 13, 2012 @ 3:00PM EST
+
+Developers:
+    MjolnirCommando -           Manager and Head Programmer

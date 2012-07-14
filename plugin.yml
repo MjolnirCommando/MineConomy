@@ -1,0 +1,266 @@
+name: MineConomy
+main: me.mjolnir.mineconomy.MineConomy
+version: 1.4
+description: >
+             MineConomy is a simple, multi-feature Economy Plugin for Bukkit.
+permissions:
+   mineconomy.*:
+      description: Gives access to all MineConomy commands.
+      default: op
+      children:
+         mineconomy.help: true
+         mineconomy.account.*: true
+         mineconomy.balance.*: true
+         mineconomy.currency.*: true
+         mineconomy.bank.*: true
+         mineconomy.save: true
+         mineconomy.reload: true
+   mineconomy.help:
+      description: Allows user to access MineConomy help.
+      default: true
+   mineconomy.account.*:
+      description: Allows user to have an account.
+      default: op
+      children:
+         mineconomy.account.have: true
+         mineconomy.account.create: true
+         mineconomy.account.delete: true
+   mineconomy.account.have:
+      description: Allows user to have an account.
+      default: true
+   mineconomy.account.create:
+      description: Allows user to create another account.
+      default: op
+   mineconomy.account.delete:
+      description: Allows user to delete another account.
+      default: op
+   mineconomy.balance.*:
+      description: Allows user to have access to basic balance features.
+      default: op
+      children:
+         mineconomy.balance.check: true
+         mineconomy.balance.get: true
+         mineconomy.balance.set: true
+         mineconomy.balance.pay: true
+         mineconomy.balance.give: true
+         mineconomy.balance.take: true
+         mineconomy.balance.empty: true
+         mineconomy.balance.top: true
+   mineconomy.balance.check:
+      description: Allows user to check their balance.
+      default: true
+   mineconomy.balance.get:
+      description: Allows user to get another user's balance.
+      default: op
+   mineconomy.balance.set:
+      description: Allows user to set another user's balance.
+      default: op
+   mineconomy.balance.pay:
+      description: Allows user to pay another user.
+      default: true
+   mineconomy.balance.give:
+      description: Allows user to give money to another user.
+      default: op
+   mineconomy.balance.take:
+      description: Allows user to take money away from another user.
+      default: op
+   mineconomy.balance.empty:
+      description: Sets another user's balance to 0.
+      default: op
+   mineconomy.balance.deposit:
+      description: Allows user to deposit physical currency into their account.
+      default: true
+   mineconomy.balance.withdraw:
+      description: Allows user to withdraw physical currency from their account.
+      default: true
+   mineconomy.balance.top:
+      description: Allows user to check the top accounts on the server.
+      default: true
+   mineconomy.currency.*:
+      description: Allows user access to all currency commands.
+      default: op
+      children:
+         mineconomy.currency.set: true
+         mineconomy.currency.set.others: true
+   mineconomy.currency.set:
+      description: Allows user set their currency.
+      default: true
+   mineconomy.currency.set.others:
+      description: Allows user to set other accounts' currencies.
+      default: op
+   mineconomy.save:
+      description: Allows user to save MineConomy data.
+      default: op
+   mineconomy.reload:
+      description: Allows user to reload MineConomy data.
+      default: op
+   mineconomy.bank.*:
+      description: Allows user to access all bank commands.
+      default: op
+      children:
+         mineconomy.bank.create: true
+         mineconomy.bank.delete: true
+         mineconomy.bank.rename: true
+         mineconomy.bank.account.*: true
+   mineconomy.bank.account*:
+      description: Allows user to access all bank account commands.
+      default: op
+      children:
+         mineconomy.bank.account.balance: true
+         mineconomy.bank.account.create: true
+         mineconomy.bank.account.delete: true
+         mineconomy.bank.account.create.others: true
+         mineconomy.bank.account.delete.others: true
+         mineconomy.bank.account.get: true
+         mineconomy.bank.account.set: true
+         mineconomy.bank.account.empty: true
+         mineconomy.bank.account.rename: true
+         mineconomy.bank.account.rename.others: true
+         mineconomy.bank.account.deposit: true
+         mineconomy.bank.account.withdraw: true
+   mineconomy.bank.account.balance:
+      description: Allows user to check bank account balance.
+      default: true
+   mineconomy.bank.create:
+      description: Allows user to create banks.
+      default: op
+   mineconomy.bank.delete:
+      description: Allows user to delete banks.
+      default: op
+   mineconomy.bank.account.create:
+      description: Allows user to create their own bank accounts.
+      default: true
+   mineconomy.bank.account.delete:
+      description: Allows user to delete their own bank accounts.
+      default: true
+   mineconomy.bank.account.deposit:
+      description: Allows user to deposit money in their bank accounts.
+      default: true
+   mineconomy.bank.account.withdraw:
+      description: Allows user to withdraw money from their bank accounts.
+      default: true
+   mineconomy.bank.account.create.others:
+      description: Allows user to create bank accounts.
+      default: op
+   mineconomy.bank.account.delete.others:
+      description: Allows user to delete bank accounts.
+      default: op
+   mineconomy.bank.account.get:
+      description: Allows user to get bank account balances.
+      default: op
+   mineconomy.bank.account.set:
+      description: Allows user to set bank account balances.
+      default: op
+   mineconomy.bank.account.empty:
+      description: Allows user to empty bank accounts.
+      default: op
+   mineconomy.bank.account.rename:
+      description: Allows user to rename bank accounts.
+      default: op
+   mineconomy.bank.rename:
+      description: Allows user to rename banks.
+      default: op
+   mineconomy.bank.account.transfer:
+      description: Allows user to transfer bank account funds.
+      default: true
+   mineconomy.bank.account.transfer.others:
+      description: Allows user to transfer other bank account funds.
+      default: op
+commands:
+   mc:
+      description: Displays your balance.
+      usage: /mc
+   mc balance:
+      description: Displays your balance.
+      usage: /mc balance
+   mc help:
+      description: Displays MineConomy help.
+      usage: /mc help
+   mc create:
+      description: Creates another account.
+      usage: /mc create <account>
+   mc delete:
+      description: Deletes an account.
+      usage: /mc delete <account>
+   mc pay:
+      description: Pays another player.
+      usage: /mc pay <account> <amount>
+   mc set:
+      description: Set another account's balance.
+      usage: /mc set <account> <balance>
+   mc get:
+      description: Gets another account's balance.
+      usage: /mc get <account>
+   mc give:
+      description: Gives another account money.
+      usage: /mc give <account> <amount>
+   mc take:
+      description: Takes money from another account.
+      usage: /mc take <account> <amount>
+   mc empty:
+      description: Sets another account's balance to zero.
+      usage: /mc empty <account>
+   mc deposit:
+      description: Deposits physical currency into account.
+      usage: /mc deposit <amount>
+   mc withdraw:
+      description: Withdraws physical currency from account.
+      usage: /mc withdraw <amount>
+   mc top:
+      description: Displays the top accounts on the server.
+      usage: /mc top
+   mc exp:
+      description: Displays your amount of experience.
+      usage: /mc exp
+   mc setcurrency:
+      description: Sets the currency of the specified account.
+      usage: /mc setcurrency (account) <type>
+   mc save:
+      description: Saves all MineConomy data.
+      usage: /mc save
+   mc reload:
+      description: Reloads all MineConomy data.
+      usage: /mc save
+   money:
+      description: Alias for 'mc'
+      usage: /money COMMAND
+   mcb:
+      description: Displays your balance in specified bank.
+      usage: /mcb <bank>
+   mcb balance:
+      description: Displays your balance in specified bank.
+      usage: /mcb balance <bank>
+   mcb join:
+      description: Joins specified bank.
+      usage: /mcb join <bank>
+   mcb leave:
+      description: Leaves specified bank.
+      usage: /mcb leave <bank>
+   mcb deposit:
+      description: Deposits amount in their account.
+      usage: /mcb depsoit <bank> <amount>
+   mcb withdraw:
+      description: Withdraws amount from their account.
+      usage: /mcb leave <bank> <amount>
+   mcb create:
+      description: Creates new bank/bank account.
+      usage: /mcb create <bank> (account)
+   mcb delete:
+      description: Deletes specified bank/bank account.
+      usage: /mcb delete <bank> (account)
+   mcb get:
+      description: Displays the balance of specified bank account.
+      usage: /mcb get <bank> <account>
+   mcb set:
+      description: Sets the balance of specified bank account.
+      usage: /mcb set <bank> <account> <balance>
+   mcb empty:
+      description: Empties the specified bank account.
+      usage: /mcb empty <bank> <account>
+   mcb rename:
+      description: Renames the specified bank/bank account.
+      usage: /mcb rename <bank> (account) <newbank> (newaccount)
+   mcb transfer:
+      description: Transfers the specified amount from bank account to bank account.
+      usage: /mcb transfer <bank> <account> <tobank> <toaccount> <amount>
+   
