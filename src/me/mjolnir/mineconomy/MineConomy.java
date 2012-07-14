@@ -359,15 +359,13 @@ public class MineConomy extends JavaPlugin
 
                     for (int i = 0; accountlist.size() > i; i++)
                     {
-                        IOH.log(accountlist.get(i), IOH.DEV);
-
                         Statement st = con.createStatement();
                         String com = "INSERT INTO mineconomy_accounts(account, balance, currency, status) VALUES ('"
                                 + accountlist.get(i)
                                 + "', "
                                 + accounts.get("Accounts." + accountlist.get(i) + ".Balance").toString()
                                 + ", '"
-                                + MCCom.getDefaultCurrency()
+                                + accounts.get("Accounts." + accountlist.get(i) + ".Currency").toString()
                                 + "', 'NORMAL')";
                         st.execute(com);
                     }

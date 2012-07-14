@@ -13,11 +13,7 @@ import me.mjolnir.mineconomy.internal.util.IOH;
 public final class MySqlAccounting extends AccountingBase
 {
     private static Connection con = null;
-    //private static String url = "jdbc:mysql://localhost:3306/";
-    //private static String dbName = "shoutbox";
     private static String driver = "com.mysql.jdbc.Driver";
-    //private static String userName = "root";
-    //private static String password = "orange";
     
     protected MySqlAccounting()
     {
@@ -26,7 +22,18 @@ public final class MySqlAccounting extends AccountingBase
     
     public void load()
     {
-        reload();
+        IOH.log("Loading Accounts from database...", IOH.INFO);
+        
+        try
+        {
+            Class.forName(driver).newInstance();
+            con = DriverManager
+                    .getConnection("jdbc:mysql://" + Settings.dburl + ":3306/" + Settings.dbname, Settings.dbuser, Settings.dbpass);
+        }
+        catch (Exception e)
+        {
+            IOH.error("MySQL Error", e);
+        }
         
         try
         {
@@ -38,41 +45,28 @@ public final class MySqlAccounting extends AccountingBase
         {
             try
             {
+                IOH.log("Accounts Table not found in database!", IOH.INFO);
                 Statement st = con.createStatement();
                 String com = "CREATE TABLE mineconomy_accounts(id int NOT NULL AUTO_INCREMENT, account text NOT NULL, balance double NOT NULL, currency text NOT NULL, status text NOT NULL, PRIMARY KEY (id) )";
                 st.execute(com);
+                IOH.log("Created Accounts Table in database...", IOH.INFO);
             }
             catch (SQLException e1)
             {
                 IOH.error("MySQL Error", e1);
             }
         }
+        
+        IOH.log("Accounts loaded from database!", IOH.INFO);
     }
     
     public void reload()
     {
-        try
-        {
-            Class.forName(driver).newInstance();
-            con = DriverManager
-                    .getConnection("jdbc:mysql://" + Settings.dburl + ":3306/" + Settings.dbname, Settings.dbuser, Settings.dbpass);
-        }
-        catch (Exception e)
-        {
-            IOH.error("MySQL Error", e);
-        }
+        // Nothing to reload.
     }
     
     public void save()
     {
-        try
-        {
-            con.close();
-        }
-        catch (Exception e)
-        {
-            IOH.error("MySQL Error", e);
-        }
         reload();
     }
     
