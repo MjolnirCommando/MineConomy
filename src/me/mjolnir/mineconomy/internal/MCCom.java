@@ -1108,7 +1108,14 @@ public class MCCom
 	
 	// Vault Methods -----------------------------------------------------------
 	
-	public static boolean canVaultAfford(String account, double amount)
+	/**
+	 * Returns true if the specified account has at least the specified amount. (Currencies are converted.)
+	 * 
+	 * @param account
+	 * @param amount
+	 * @return
+	 */
+	public static boolean canExternalAfford(String account, double amount)
 	{
 	    double value = MCCom.getCurrencyValue(MCCom
                 .getCurrency(account));
@@ -1118,7 +1125,13 @@ public class MCCom
         return MCCom.canAfford(account, base);
 	}
 	
-	public static double getVaultBalance(String account)
+	/**
+	 * Returns the balance of the specified account. (Currencies are converted.)
+	 * 
+	 * @param account
+	 * @return
+	 */
+	public static double getExternalBalance(String account)
 	{
 	    double value = MCCom.getCurrencyValue(MCCom
                 .getCurrency(account));
@@ -1128,7 +1141,13 @@ public class MCCom
         return base;
 	}
 	
-	public static void setVaultBalance(String account, double balance)
+	/**
+	 * Sets the specified account's balance to the specified amount. (Currencies are converted.)
+	 * 
+	 * @param account
+	 * @param balance
+	 */
+	public static void setExternalBalance(String account, double balance)
 	{
 	    double value = MCCom.getCurrencyValue(MCCom
                 .getCurrency(account));
