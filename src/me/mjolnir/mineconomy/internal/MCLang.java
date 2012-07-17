@@ -1,7 +1,6 @@
 package me.mjolnir.mineconomy.internal;
 
 import java.io.File;
-import java.io.IOException;
 
 import me.mjolnir.mineconomy.MineConomy;
 import me.mjolnir.mineconomy.internal.util.IOH;
@@ -19,7 +18,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class MCLang
 {
     private static String langtag = "MineConomy";
-    public static final String tag = ChatColor.GREEN + "[" + langtag + "] ";
+    public static String tag = ChatColor.GREEN + "[" + langtag + "] ";
     
     public static String welcomeMessage = "&fWelcome to MineConomy, %player%! Your balance is &a%pos-balance%&c%neg-balance% &f%currency%. Type '/mc help' for help.";
     
@@ -203,67 +202,12 @@ public class MCLang
         messageTransactionComplete = MCFormat.color(lang.getString("Lang.Message.Transaction Complete", messageTransactionComplete));
         errorNoPhysicalCurrency = MCFormat.color(lang.getString("Lang.Error.No Physical Currency", errorNoPhysicalCurrency));
         errorExpEnough = MCFormat.color(lang.getString("Lang.Error.Exp Enough", errorExpEnough));
+        
+        tag = ChatColor.GREEN + "[" + langtag + "] ";
     }
     
     public static void save()
     {
-        lang.set("Lang", "");
-        lang.set("Lang.Tag", "MineConomy");
-        lang.set("Lang.Message.Welcome Message", welcomeMessage);
-        lang.set("Lang.Message.Welcome Account Created", messageWelcomeAccountCreated);
-        lang.set("Lang.Message.Account Balance", messageAccountBalance);
-        lang.set("Lang.Message.Bank Balance", messageBankBalance);
-        lang.set("Lang.Error.Permission.Have Account", errorPermissionHaveAccount);
-        lang.set("Lang.Error.Permission.Generic", errorPermissionGeneric);
-        lang.set("Lang.Error.Int", errorInt);
-        lang.set("Lang.Error.Invalid Args", errorInvalidArgs);
-        lang.set("Lang.Error.Command.Recognition", errorCommandRecognition);
-        lang.set("Lang.Error.Currency Not Found", errorCurrencyNotFound);
-        lang.set("Lang.Message.Currency Set", messageCurrencySet);
-        lang.set("Lang.Message.Exp Check", messageExpCheck);
-        lang.set("Lang.Message.Get Balance", messageGetBalance);
-        lang.set("Lang.Message.Set Balance", messageSetBalance);
-        lang.set("Lang.Error.Max Debt", errorMaxDebt);
-        lang.set("Lang.Message.Give", messageGive);
-        lang.set("Lang.Error.They Enough", errorTheyEnough);
-        lang.set("Lang.Error.You Enough", errorYouEnough);
-        lang.set("Lang.Message.Payed To", messagePayedTo);
-        lang.set("Lang.Message.Payed From", messagePayedFrom);
-        lang.set("Lang.Message.Took", messageTook);
-        lang.set("Lang.Message.Empty", messageEmpty);
-        lang.set("Lang.Message.Account Created", messageCreated);
-        lang.set("Lang.Error.Account Exists", errorAccountExists);
-        lang.set("Lang.Message.Account Deleted", messageDeleted);
-        lang.set("Lang.Error.No Account", errorNoAccount);
-        lang.set("Lang.Error.No Bank", errorNoBank);
-        lang.set("Lang.Error.No Bank Account", errorNoBankAccount);
-        lang.set("Lang.Message.Bank Created", messageBankCreated);
-        lang.set("Lang.Error.Bank Exists", errorBankExists);
-        lang.set("Lang.Message.Bank Deleted", messageBankDeleted);
-        lang.set("Lang.Error.Money Format", errorMoneyFormat);
-        lang.set("Lang.Error.Bank Account Exists", errorBankAccountExists);
-        lang.set("Lang.Message.Bank Account Created", messageBankAccountCreated);
-        lang.set("Lang.Message.Bank Account Deleted", messageBankAccountDeleted);
-        lang.set("Lang.Message.Empty Bank Account", messageEmptyBankAccount);
-        lang.set("Lang.Message.Bank Renamed", messageBankRenamed);
-        lang.set("Lang.Message.Get Bank Account", messageGetBankAccount);
-        lang.set("Lang.Message.Set Bank Account", messageSetBankAccount);
-        lang.set("Lang.Message.Bank Account Renamed", messageBankAccountRenamed);
-        lang.set("Lang.Message.Bank Account Deposit", messageBankAccountDeposit);
-        lang.set("Lang.Message.Bank Account Withdraw", messageBankAccountWithdraw);
-        lang.set("Lang.Message.Transaction Complete", messageTransactionComplete);
-        lang.set("Lang.Error.No Physical Currency", errorNoPhysicalCurrency);
-        lang.set("Lang.Error.Exp Enough", errorExpEnough);
-        
-        try
-        {
-            lang.save(langFile);
-        }
-        catch (IOException e)
-        {
-            IOH.error("IOException", e);
-        }
-        
         reload();
     }
     
