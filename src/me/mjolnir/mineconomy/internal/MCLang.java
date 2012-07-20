@@ -1,6 +1,7 @@
 package me.mjolnir.mineconomy.internal;
 
 import java.io.File;
+import java.io.IOException;
 
 import me.mjolnir.mineconomy.MineConomy;
 import me.mjolnir.mineconomy.internal.util.IOH;
@@ -208,6 +209,63 @@ public class MCLang
     
     public static void save()
     {
+        lang.set("Lang", "");
+        lang.set("Lang.Tag", MCFormat.decolor("MineConomy"));
+        lang.set("Lang.Message.Welcome Message", MCFormat.decolor(welcomeMessage));
+        lang.set("Lang.Message.Welcome Account Created", MCFormat.decolor(messageWelcomeAccountCreated));
+        lang.set("Lang.Message.Account Balance", MCFormat.decolor(messageAccountBalance));
+        lang.set("Lang.Message.Bank Balance", MCFormat.decolor(messageBankBalance));
+        lang.set("Lang.Error.Permission.Have Account", MCFormat.decolor(errorPermissionHaveAccount));
+        lang.set("Lang.Error.Permission.Generic", MCFormat.decolor(errorPermissionGeneric));
+        lang.set("Lang.Error.Int", MCFormat.decolor(errorInt));
+        lang.set("Lang.Error.Invalid Args", MCFormat.decolor(errorInvalidArgs));
+        lang.set("Lang.Error.Command.Recognition", MCFormat.decolor(errorCommandRecognition));
+        lang.set("Lang.Error.Currency Not Found", MCFormat.decolor(errorCurrencyNotFound));
+        lang.set("Lang.Message.Currency Set", MCFormat.decolor(messageCurrencySet));
+        lang.set("Lang.Message.Exp Check", MCFormat.decolor(messageExpCheck));
+        lang.set("Lang.Message.Get Balance", MCFormat.decolor(messageGetBalance));
+        lang.set("Lang.Message.Set Balance", MCFormat.decolor(messageSetBalance));
+        lang.set("Lang.Error.Max Debt", MCFormat.decolor(errorMaxDebt));
+        lang.set("Lang.Message.Give", MCFormat.decolor(messageGive));
+        lang.set("Lang.Error.They Enough", MCFormat.decolor(errorTheyEnough));
+        lang.set("Lang.Error.You Enough", MCFormat.decolor(errorYouEnough));
+        lang.set("Lang.Message.Payed To", MCFormat.decolor(messagePayedTo));
+        lang.set("Lang.Message.Payed From", MCFormat.decolor(messagePayedFrom));
+        lang.set("Lang.Message.Took", MCFormat.decolor(messageTook));
+        lang.set("Lang.Message.Empty", MCFormat.decolor(messageEmpty));
+        lang.set("Lang.Message.Account Created", MCFormat.decolor(messageCreated));
+        lang.set("Lang.Error.Account Exists", MCFormat.decolor(errorAccountExists));
+        lang.set("Lang.Message.Account Deleted", MCFormat.decolor(messageDeleted));
+        lang.set("Lang.Error.No Account", MCFormat.decolor(errorNoAccount));
+        lang.set("Lang.Error.No Bank", MCFormat.decolor(errorNoBank));
+        lang.set("Lang.Error.No Bank Account", MCFormat.decolor(errorNoBankAccount));
+        lang.set("Lang.Message.Bank Created", MCFormat.decolor(messageBankCreated));
+        lang.set("Lang.Error.Bank Exists", MCFormat.decolor(errorBankExists));
+        lang.set("Lang.Message.Bank Deleted", MCFormat.decolor(messageBankDeleted));
+        lang.set("Lang.Error.Money Format", MCFormat.decolor(errorMoneyFormat));
+        lang.set("Lang.Error.Bank Account Exists", MCFormat.decolor(errorBankAccountExists));
+        lang.set("Lang.Message.Bank Account Created", MCFormat.decolor(messageBankAccountCreated));
+        lang.set("Lang.Message.Bank Account Deleted", MCFormat.decolor(messageBankAccountDeleted));
+        lang.set("Lang.Message.Empty Bank Account", MCFormat.decolor(messageEmptyBankAccount));
+        lang.set("Lang.Message.Bank Renamed", MCFormat.decolor(messageBankRenamed));
+        lang.set("Lang.Message.Get Bank Account", MCFormat.decolor(messageGetBankAccount));
+        lang.set("Lang.Message.Set Bank Account", MCFormat.decolor(messageSetBankAccount));
+        lang.set("Lang.Message.Bank Account Renamed", MCFormat.decolor(messageBankAccountRenamed));
+        lang.set("Lang.Message.Bank Account Deposit", MCFormat.decolor(messageBankAccountDeposit));
+        lang.set("Lang.Message.Bank Account Withdraw", MCFormat.decolor(messageBankAccountWithdraw));
+        lang.set("Lang.Message.Transaction Complete", MCFormat.decolor(messageTransactionComplete));
+        lang.set("Lang.Error.No Physical Currency", MCFormat.decolor(errorNoPhysicalCurrency));
+        lang.set("Lang.Error.Exp Enough", MCFormat.decolor(errorExpEnough));
+        
+        try
+        {
+            lang.save(langFile);
+        }
+        catch (IOException e)
+        {
+            IOH.error("IOException", e);
+        }
+        
         reload();
     }
     

@@ -32,6 +32,29 @@ public class MCFormat
 
         return message;
     }
+    
+    public static String decolor(String message)
+    {
+        message = message.replace(ChatColor.BLACK + "", "&0");
+        message = message.replace(ChatColor.DARK_BLUE + "", "&1");
+        message = message.replace(ChatColor.DARK_GREEN + "", "&2");
+        message = message.replace(ChatColor.DARK_AQUA + "", "&3");
+        message = message.replace(ChatColor.DARK_RED + "", "&4");
+        message = message.replace(ChatColor.DARK_PURPLE + "", "&5");
+        message = message.replace(ChatColor.GOLD + "", "&6");
+        message = message.replace(ChatColor.GRAY + "", "&7");
+        message = message.replace(ChatColor.DARK_GRAY + "", "&8");
+        message = message.replace(ChatColor.BLUE + "", "&9");
+
+        message = message.replace(ChatColor.GREEN + "", "&a");
+        message = message.replace(ChatColor.AQUA + "", "&b");
+        message = message.replace(ChatColor.RED + "", "&c");
+        message = message.replace(ChatColor.LIGHT_PURPLE + "", "&d");
+        message = message.replace(ChatColor.YELLOW + "", "&e");
+        message = message.replace(ChatColor.WHITE + "", "&f");
+
+        return message;
+    }
 
     public static String format(double amount)
     {
