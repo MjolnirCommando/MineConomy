@@ -14,7 +14,6 @@ import me.mjolnir.mineconomy.internal.MCCom;
 import me.mjolnir.mineconomy.internal.MCLang;
 import me.mjolnir.mineconomy.internal.util.MCFormat;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -35,117 +34,129 @@ public class Balance
      */
     public static void help(Player player, int page)
     {
+        String pgcontent = "";
+        
         if (page == 1)
         {
-            player.sendMessage(" ");
-            player.sendMessage(ChatColor.GREEN + "===== MineConomy Help Page 1/3 =====");
-            player.sendMessage(ChatColor.WHITE
-                    + "<REQUIRED> [OPTION] (OPTIONAL)");
-            player.sendMessage(ChatColor.GRAY + "/mc help <PAGE #>"
-                    + ChatColor.WHITE + "- displays this menu.");
-            player.sendMessage(ChatColor.GRAY + "/mc balance "
-                    + ChatColor.WHITE + "or " + ChatColor.GRAY + "/money "
-                    + ChatColor.WHITE + "- displays your account balance.");
-            player.sendMessage(ChatColor.GRAY + "/mc pay <ACCOUNT> "
-                    + ChatColor.WHITE + "- pays specified account.");
-            player.sendMessage(ChatColor.GRAY + "/mc get <ACCOUNT> "
-                    + ChatColor.WHITE
-                    + "- displays specified account's balance.");
-            player.sendMessage(ChatColor.GRAY + "/mc set <ACCOUNT> <AMOUNT> "
-                    + ChatColor.WHITE + "- sets specified account's balance.");
-            player.sendMessage(ChatColor.GRAY + "/mc empty <ACCOUNT> "
-                    + ChatColor.WHITE
-                    + "- sets specifeid account's balance to 0.");
-            player.sendMessage(ChatColor.GRAY + "/mc create <ACCOUNT> "
-                    + ChatColor.WHITE + "- creates new account.");
-            player.sendMessage(ChatColor.GRAY + "/mc delete <ACCOUNT> "
-                    + ChatColor.WHITE + "- deletes existing account.");
-            player.sendMessage(ChatColor.GRAY + "/mc give <ACCOUNT> <AMOUNT> "
-                    + ChatColor.WHITE
-                    + "- gives specified account the specified " + "amount.");
-            player.sendMessage(ChatColor.GRAY + "/mc take <ACCOUNT> <AMOUNT> "
-                    + ChatColor.WHITE + "- takes specified amount from the "
-                    + "specified account.");
-            player.sendMessage(ChatColor.GRAY + "/mc exp " + ChatColor.WHITE
-                    + "- displays your amount of experience.");
+            pgcontent = MCLang.messageHelp1;
+//            player.sendMessage(" ");
+//            player.sendMessage(ChatColor.GREEN + "===== MineConomy Help Page 1/3 =====");
+//            player.sendMessage(ChatColor.WHITE
+//                    + "<REQUIRED> [OPTION] (OPTIONAL)");
+//            player.sendMessage(ChatColor.GRAY + "/mc help <PAGE #>"
+//                    + ChatColor.WHITE + "- displays this menu.");
+//            player.sendMessage(ChatColor.GRAY + "/mc balance "
+//                    + ChatColor.WHITE + "or " + ChatColor.GRAY + "/money "
+//                    + ChatColor.WHITE + "- displays your account balance.");
+//            player.sendMessage(ChatColor.GRAY + "/mc pay <ACCOUNT> "
+//                    + ChatColor.WHITE + "- pays specified account.");
+//            player.sendMessage(ChatColor.GRAY + "/mc get <ACCOUNT> "
+//                    + ChatColor.WHITE
+//                    + "- displays specified account's balance.");
+//            player.sendMessage(ChatColor.GRAY + "/mc set <ACCOUNT> <AMOUNT> "
+//                    + ChatColor.WHITE + "- sets specified account's balance.");
+//            player.sendMessage(ChatColor.GRAY + "/mc empty <ACCOUNT> "
+//                    + ChatColor.WHITE
+//                    + "- sets specifeid account's balance to 0.");
+//            player.sendMessage(ChatColor.GRAY + "/mc create <ACCOUNT> "
+//                    + ChatColor.WHITE + "- creates new account.");
+//            player.sendMessage(ChatColor.GRAY + "/mc delete <ACCOUNT> "
+//                    + ChatColor.WHITE + "- deletes existing account.");
+//            player.sendMessage(ChatColor.GRAY + "/mc give <ACCOUNT> <AMOUNT> "
+//                    + ChatColor.WHITE
+//                    + "- gives specified account the specified " + "amount.");
+//            player.sendMessage(ChatColor.GRAY + "/mc take <ACCOUNT> <AMOUNT> "
+//                    + ChatColor.WHITE + "- takes specified amount from the "
+//                    + "specified account.");
+//            player.sendMessage(ChatColor.GRAY + "/mc exp " + ChatColor.WHITE
+//                    + "- displays your amount of experience.");
         }
         else if (page == 2)
         {
-            player.sendMessage(" ");
-            player.sendMessage(ChatColor.GREEN + "===== MineConomy Help Page 2/3 =====");
-            player.sendMessage(ChatColor.GRAY
-                    + "/mc deposit <TYPE> <AMOUNT> "
-                    + ChatColor.WHITE
-                    + "- deposits specified amount of physical currency into your account.");
-            player.sendMessage(ChatColor.GRAY
-                    + "/mc withdraw <TYPE> <AMOUNT> "
-                    + ChatColor.WHITE
-                    + "- withdraws specified amount of physical currency from your account.");
-            player.sendMessage(ChatColor.GRAY
-                    + "/mc top <SIZE>"
-                    + ChatColor.WHITE
-                    + "- displays the richest accounts on the server.");
-            player.sendMessage(ChatColor.GRAY
-                    + "/mc setcurrency (ACCOUNT) <CURRENCY> "
-                    + ChatColor.WHITE
-                    + "- sets the specified account's currency.");
-            player.sendMessage(ChatColor.GRAY
-                    + "/mcb <BANK> "
-                    + ChatColor.WHITE
-                    + "- displays your balance in the specified bank.");
-            player.sendMessage(ChatColor.GRAY
-                    + "/mcb balance <BANK> "
-                    + ChatColor.WHITE
-                    + "- displays your balance in the specified bank.");
-            player.sendMessage(ChatColor.GRAY
-                    + "/mcb create <BANK> (ACCOUNT) "
-                    + ChatColor.WHITE
-                    + "- creates new bank/bank account.");
-            player.sendMessage(ChatColor.GRAY
-                    + "/mcb delete <BANK> (ACCOUNT) "
-                    + ChatColor.WHITE
-                    + "- deletes specified bank/bank account.");
-            player.sendMessage(ChatColor.GRAY
-                    + "/mcb get <BANK> <ACCOUNT> "
-                    + ChatColor.WHITE
-                    + "- displays the balance of specified bank account.");
-            player.sendMessage(ChatColor.GRAY
-                    + "/mcb set <BANK> <ACCOUNT> "
-                    + ChatColor.WHITE
-                    + "- sets the balance of specified bank account.");
+            pgcontent = MCLang.messageHelp2;
+//            player.sendMessage(" ");
+//            player.sendMessage(ChatColor.GREEN + "===== MineConomy Help Page 2/3 =====");
+//            player.sendMessage(ChatColor.GRAY
+//                    + "/mc deposit <TYPE> <AMOUNT> "
+//                    + ChatColor.WHITE
+//                    + "- deposits specified amount of physical currency into your account.");
+//            player.sendMessage(ChatColor.GRAY
+//                    + "/mc withdraw <TYPE> <AMOUNT> "
+//                    + ChatColor.WHITE
+//                    + "- withdraws specified amount of physical currency from your account.");
+//            player.sendMessage(ChatColor.GRAY
+//                    + "/mc top <SIZE>"
+//                    + ChatColor.WHITE
+//                    + "- displays the richest accounts on the server.");
+//            player.sendMessage(ChatColor.GRAY
+//                    + "/mc setcurrency (ACCOUNT) <CURRENCY> "
+//                    + ChatColor.WHITE
+//                    + "- sets the specified account's currency.");
+//            player.sendMessage(ChatColor.GRAY
+//                    + "/mcb <BANK> "
+//                    + ChatColor.WHITE
+//                    + "- displays your balance in the specified bank.");
+//            player.sendMessage(ChatColor.GRAY
+//                    + "/mcb balance <BANK> "
+//                    + ChatColor.WHITE
+//                    + "- displays your balance in the specified bank.");
+//            player.sendMessage(ChatColor.GRAY
+//                    + "/mcb create <BANK> (ACCOUNT) "
+//                    + ChatColor.WHITE
+//                    + "- creates new bank/bank account.");
+//            player.sendMessage(ChatColor.GRAY
+//                    + "/mcb delete <BANK> (ACCOUNT) "
+//                    + ChatColor.WHITE
+//                    + "- deletes specified bank/bank account.");
+//            player.sendMessage(ChatColor.GRAY
+//                    + "/mcb get <BANK> <ACCOUNT> "
+//                    + ChatColor.WHITE
+//                    + "- displays the balance of specified bank account.");
+//            player.sendMessage(ChatColor.GRAY
+//                    + "/mcb set <BANK> <ACCOUNT> "
+//                    + ChatColor.WHITE
+//                    + "- sets the balance of specified bank account.");
         }
         else if (page == 3)
         {
-            player.sendMessage(" ");
-            player.sendMessage(ChatColor.GREEN + "===== MineConomy Help Page 3/3 =====");
-            player.sendMessage(ChatColor.GRAY
-                    + "/mcb empty <BANK> <ACCOUNT> "
-                    + ChatColor.WHITE
-                    + "- empties the specified bank account.");
-            player.sendMessage(ChatColor.GRAY
-                    + "/mcb rename <BANK> (ACCOUNT) <NEW_BANK> (NEW_ACCOUNT) "
-                    + ChatColor.WHITE
-                    + "- renames the specified bank/bank account.");
-            player.sendMessage(ChatColor.GRAY
-                    + "/mcb transfer <BANK> (ACCOUNT) <TO_BANK> <TO_ACCOUNT> <AMOUNT> "
-                    + ChatColor.WHITE
-                    + "- transfers the specified amount from bank account to bank account.");
-            player.sendMessage(ChatColor.GRAY
-                    + "/mcb join <BANK> "
-                    + ChatColor.WHITE
-                    + "- joins specified bank.");
-            player.sendMessage(ChatColor.GRAY
-                    + "/mcb leave <BANK> "
-                    + ChatColor.WHITE
-                    + "- leaves specified bank.");
-            player.sendMessage(ChatColor.GRAY
-                    + "/mcb deposit <BANK> <AMOUNT> "
-                    + ChatColor.WHITE
-                    + "- deposits amount in your account.");
-            player.sendMessage(ChatColor.GRAY
-                    + "/mcb withdraw <BANK> <AMOUNT> "
-                    + ChatColor.WHITE
-                    + "- withdraws amount from your account.");
+            pgcontent = MCLang.messageHelp3;
+//            player.sendMessage(" ");
+//            player.sendMessage(ChatColor.GREEN + "===== MineConomy Help Page 3/3 =====");
+//            player.sendMessage(ChatColor.GRAY
+//                    + "/mcb empty <BANK> <ACCOUNT> "
+//                    + ChatColor.WHITE
+//                    + "- empties the specified bank account.");
+//            player.sendMessage(ChatColor.GRAY
+//                    + "/mcb rename <BANK> (ACCOUNT) <NEW_BANK> (NEW_ACCOUNT) "
+//                    + ChatColor.WHITE
+//                    + "- renames the specified bank/bank account.");
+//            player.sendMessage(ChatColor.GRAY
+//                    + "/mcb transfer <BANK> (ACCOUNT) <TO_BANK> <TO_ACCOUNT> <AMOUNT> "
+//                    + ChatColor.WHITE
+//                    + "- transfers the specified amount from bank account to bank account.");
+//            player.sendMessage(ChatColor.GRAY
+//                    + "/mcb join <BANK> "
+//                    + ChatColor.WHITE
+//                    + "- joins specified bank.");
+//            player.sendMessage(ChatColor.GRAY
+//                    + "/mcb leave <BANK> "
+//                    + ChatColor.WHITE
+//                    + "- leaves specified bank.");
+//            player.sendMessage(ChatColor.GRAY
+//                    + "/mcb deposit <BANK> <AMOUNT> "
+//                    + ChatColor.WHITE
+//                    + "- deposits amount in your account.");
+//            player.sendMessage(ChatColor.GRAY
+//                    + "/mcb withdraw <BANK> <AMOUNT> "
+//                    + ChatColor.WHITE
+//                    + "- withdraws amount from your account.");
+        }
+        
+        String[] breaks = pgcontent.split("<br>");
+        
+        for (int i = 0; breaks.length > i; i++)
+        {
+            player.sendMessage(breaks[i]);
         }
     }
 

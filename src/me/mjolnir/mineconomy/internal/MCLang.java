@@ -69,6 +69,9 @@ public class MCLang
     public static String messageTransactionComplete = "&fTransaction complete.";
     public static String errorNoPhysicalCurrency = "&cThat Physical Currency could not be found.";
     public static String errorExpEnough = "&cYou do not have enough experience.";
+    public static String messageHelp1 = "<br>&a===== MineConomy Help Page 1/3 =====<br>&f<REQUIRED> [OPTION] (OPTIONAL)<br><br>&7/mc help <PAGE>&f - displays this menu.<br>&7/mc balance &for &7/money &f- displays your account balance.<br>&7/mc pay <ACCOUNT> &f- pays specified account.<br>&7/mc get <ACCOUNT> &f- displays specified account's balance.<br>&7/mc set <ACCOUNT> <AMOUNT> &f- sets specified account's balance.<br>&7/mc empty <ACCOUNT> &f- sets specified account's balance to 0.<br>&7/mc create <ACCOUNT> &f- creates new account.<br>&7/mc delete <ACCOUNT> &f- deletes existing account.<br>&7/mc give <ACCOUNT> <AMOUNT> &f- gives specified account the specified amount.<br>&7/mc take <ACCOUNT> <AMOUNT> &f- takes specified amount from the specified account.<br>&7/mc exp &f- displays your amount of experience.";
+    public static String messageHelp2 = "<br>&a===== MineConomy Help Page 2/3 =====<br>&7/mc deposit <TYPE> <AMOUNT> &f- deposits specified amount of physical currency into your account.<br>&7/mc withdraw <TYPE> <AMOUNT> &f- withdraws specified amount of physical currency from your account.<br>&7/mc top <SIZE>&f- displays the richest accounts on the server.<br>&7/mc setcurrency (ACCOUNT) <CURRENCY> &f- sets the specified account's currency.<br>&7/mcb <BANK> &f- displays your balance in the specified bank.<br>&7/mcb balance <BANK> &f- displays your balance in the specified bank.<br>&7/mcb create <BANK> (ACCOUNT) &f- creates new bank/bank account.<br>&7/mcb delete <BANK> (ACCOUNT) &f- deletes specified bank/bank account.<br>&7/mcb get <BANK> <ACCOUNT> &f- displays the balance of specified bank account.<br>&7/mcb set <BANK> <ACCOUNT> &f- sets the balance of specified bank account.";
+    public static String messageHelp3 = "<br>&a===== MineConomy Help Page 3/3 =====<br>&7/mcb empty <BANK> <ACCOUNT> &f- empties the specified bank account.<br>&7/mcb rename <BANK> (ACCOUNT) <NEW_BANK> (NEW_ACCOUNT) &f- renames the specified bank/bank account.<br>&7/mcb transfer <BANK> (ACCOUNT) <TO_BANK> <TO_ACCOUNT> <AMOUNT> &f- transfers the specified amount from bank account to bank account.<br>&7/mcb join <BANK> &f- joins specified bank.<br>&7/mcb leave <BANK> &f- leaves specified bank.<br>&7/mcb deposit <BANK> <AMOUNT> &f- deposits amount in your account.<br>&7/mcb withdraw <BANK> <AMOUNT> &f- withdraws amount from your account.";
     
     public static File                      langFile = new File(
             MineConomy.maindir + "lang/"
@@ -86,7 +89,7 @@ public class MCLang
         {
             IOH.log("Language file not found...", IOH.INFO);
             lang.set("Lang", "");
-            lang.set("Lang.Tag", "MineConomy");
+            lang.set("Lang.Tag", langtag);
             lang.set("Lang.Message.Welcome Message", welcomeMessage);
             lang.set("Lang.Message.Welcome Account Created", messageWelcomeAccountCreated);
             lang.set("Lang.Message.Account Balance", messageAccountBalance);
@@ -132,6 +135,9 @@ public class MCLang
             lang.set("Lang.Message.Transaction Complete", messageTransactionComplete);
             lang.set("Lang.Error.No Physical Currency", errorNoPhysicalCurrency);
             lang.set("Lang.Error.Exp Enough", errorExpEnough);
+            lang.set("Lang.Message.Help.Page 1", messageHelp1);
+            lang.set("Lang.Message.Help.Page 2", messageHelp2);
+            lang.set("Lang.Message.Help.Page 3", messageHelp3);
             
             IOH.log("Language file created!", IOH.INFO);
             save();
@@ -148,7 +154,7 @@ public class MCLang
     {
         lang = YamlConfiguration.loadConfiguration(langFile);
         
-        welcomeMessage = MCFormat.color(lang.getString("Lang.Message.Welcome Message"));
+        welcomeMessage = MCFormat.color(lang.getString("Lang.Message.Welcome Message", welcomeMessage));
         if (welcomeMessage.equals(""))
         {
             displayWelcome = false;
@@ -158,7 +164,7 @@ public class MCLang
             displayWelcome = true;
         }
         
-        langtag = lang.getString("Lang.Tag", langtag);
+        langtag = MCFormat.color(lang.getString("Lang.Tag", langtag));
         messageWelcomeAccountCreated = MCFormat.color(lang.getString("Lang.Message.Welcome Account Created", messageWelcomeAccountCreated));
         messageAccountBalance = MCFormat.color(lang.getString("Lang.Message.Account Balance", messageAccountBalance));
         messageBankBalance = MCFormat.color(lang.getString("Lang.Message.Bank Balance", messageBankBalance));
@@ -203,6 +209,9 @@ public class MCLang
         messageTransactionComplete = MCFormat.color(lang.getString("Lang.Message.Transaction Complete", messageTransactionComplete));
         errorNoPhysicalCurrency = MCFormat.color(lang.getString("Lang.Error.No Physical Currency", errorNoPhysicalCurrency));
         errorExpEnough = MCFormat.color(lang.getString("Lang.Error.Exp Enough", errorExpEnough));
+        messageHelp1 = MCFormat.color(lang.getString("Lang.Message.Help.Page 1", messageHelp1));
+        messageHelp2 = MCFormat.color(lang.getString("Lang.Message.Help.Page 2", messageHelp2));
+        messageHelp3 = MCFormat.color(lang.getString("Lang.Message.Help.Page 3", messageHelp3));
         
         tag = ChatColor.GREEN + "[" + langtag + "] ";
     }
@@ -210,7 +219,7 @@ public class MCLang
     public static void save()
     {
         lang.set("Lang", "");
-        lang.set("Lang.Tag", MCFormat.decolor("MineConomy"));
+        lang.set("Lang.Tag", MCFormat.decolor(langtag));
         lang.set("Lang.Message.Welcome Message", MCFormat.decolor(welcomeMessage));
         lang.set("Lang.Message.Welcome Account Created", MCFormat.decolor(messageWelcomeAccountCreated));
         lang.set("Lang.Message.Account Balance", MCFormat.decolor(messageAccountBalance));
@@ -256,6 +265,9 @@ public class MCLang
         lang.set("Lang.Message.Transaction Complete", MCFormat.decolor(messageTransactionComplete));
         lang.set("Lang.Error.No Physical Currency", MCFormat.decolor(errorNoPhysicalCurrency));
         lang.set("Lang.Error.Exp Enough", MCFormat.decolor(errorExpEnough));
+        lang.set("Lang.Message.Help.Page 1", MCFormat.decolor(messageHelp1));
+        lang.set("Lang.Message.Help.Page 2", MCFormat.decolor(messageHelp2));
+        lang.set("Lang.Message.Help.Page 3", MCFormat.decolor(messageHelp3));
         
         try
         {

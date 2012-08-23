@@ -1,6 +1,7 @@
 package me.mjolnir.mineconomy.internal.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -9,9 +10,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Scanner;
@@ -33,9 +41,12 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.bukkit.Bukkit;
+
 import me.mjolnir.mineconomy.MineConomy;
 import me.mjolnir.mineconomy.internal.Currency;
 import me.mjolnir.mineconomy.internal.MCCom;
+import me.mjolnir.mineconomy.internal.MCLang;
 import me.mjolnir.mineconomy.internal.Settings;
 import me.mjolnir.mineconomy.internal.gui.graphics.ImagePanel;
 import me.mjolnir.mineconomy.internal.gui.listeners.AccountListListener;
@@ -66,7 +77,7 @@ public class GUI
     public static JPanel                    settings;
     public static JPanel                    banks;
     public static JTabbedPane               tabs;
-    public static JTabbedPane               currencies;
+    public static JPanel                    currencies;
     public static JPanel                    content;
     private static JPanel                   pane1;
     public static JLabel                    title;
@@ -90,6 +101,8 @@ public class GUI
     public static JButton                   deletebutton;
     public static JButton                   refreshbutton2;
     public static JTextArea                 logtext;
+    
+    private static final String             consoleversion = "3.0";
 
     /**
      * Creates new GUI object.
@@ -153,7 +166,9 @@ public class GUI
         createCurrencies();
         createBanks();
         createSettings();
+        createLang();
         createLog();
+        createInfo();
 
         JPanel pane3 = new JPanel();
         pane3.setLayout(new BorderLayout());
@@ -184,7 +199,7 @@ public class GUI
         pane3.add(pane3EastFlow, BorderLayout.EAST);
 
         JLabel label2 = new JLabel(
-                "<html><span style=\"font-size:8px;\">&nbsp;[Console Version 3.0]</span></html>");
+                "<html><span style=\"font-size:8px;\">&nbsp;[Console Version " + consoleversion + "]</span></html>");
         pane3.add(label2, BorderLayout.WEST);
 
         content.add(tabs, BorderLayout.CENTER);
@@ -302,17 +317,10 @@ public class GUI
     
     private static void createCurrencies()
     {
-        currencies = new JTabbedPane();
+        currencies = new JPanel();
 
         JPanel mine = new JPanel();
         mine.setLayout(new BoxLayout(mine, BoxLayout.Y_AXIS));
-
-        JScrollPane mineScroll = new JScrollPane(mine);
-
-        JPanel label = new JPanel();
-        label.setLayout(new FlowLayout());
-        label.add(new JLabel("<html><span style=\"color:red;\">CURRENCY GUI NOT YET FULLY IMPLEMENTED.</span></html>"));
-        mine.add(label);
 
         StringBuffer sb = new StringBuffer();
 
@@ -334,12 +342,12 @@ public class GUI
             IOH.error("FileNotFoundException", e);
         }
 
-        final JTextArea bankEdit = new JTextArea(sb.toString());
+        final JTextArea currencyText = new JTextArea(sb.toString());
 
-        JScrollPane bankEditScroll = new JScrollPane(bankEdit);
-        bankEditScroll.setPreferredSize(new Dimension(750, 500));
+        JScrollPane currencyScroll = new JScrollPane(currencyText);
+        currencyScroll.setPreferredSize(new Dimension(750, 500));
 
-        mine.add(bankEditScroll);
+        mine.add(currencyScroll);
 
         JButton button = new JButton("Save");
 
@@ -355,7 +363,7 @@ public class GUI
                     out = new PrintWriter(new File(MineConomy.maindir
                             + "currencies.yml"));
 
-                    out.print(bankEdit.getText());
+                    out.print(currencyText.getText());
 
                     out.close();
                 }
@@ -377,15 +385,7 @@ public class GUI
 
         mine.add(buttonflow);
 
-        currencies.addTab("Currencies", mineScroll);
-        
-//        JPanel physical = new JPanel();
-//        
-//        JScrollPane physicalScroll = new JScrollPane(physical);
-//        
-//        physical.add(new JLabel("<html><span style=\"color:red;\">CURRENCY GUI NOT YET IMPLEMENTED.</span></html>"));
-//        
-//        currencies.addTab("Physical Currencies", physicalScroll);
+        currencies.add(mine);
         
         tabs.addTab("Currencies", currencies);
     }
@@ -754,6 +754,66 @@ public class GUI
         tabs.addTab("Settings", settingsScroll);
     }
     
+    private static void createLang()
+    {
+        JPanel lang = new JPanel();
+        lang.setLayout(new BorderLayout());
+        
+        final JTextArea langtext = new JTextArea();
+        
+        try
+        {
+            Scanner in = new Scanner(MCLang.langFile);
+            
+            while (in.hasNextLine())
+            {
+                langtext.append(in.nextLine() + "\n");
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            IOH.error("FileNotFoundException", e);
+        }
+        
+        JScrollPane langscroll = new JScrollPane(langtext);
+        langscroll.setPreferredSize(new Dimension(750, 500));
+        lang.add(langscroll, BorderLayout.CENTER);
+        
+        JPanel langflow = new JPanel();
+        langflow.setLayout(new FlowLayout());
+        
+        JButton savelang = new JButton("Save");
+        
+        savelang.addActionListener(new ActionListener(){
+            
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                try
+                {
+                    PrintWriter out = new PrintWriter(MCLang.langFile);
+                    out.print(langtext.getText());
+                    out.close();
+                }
+                catch (FileNotFoundException e)
+                {
+                    IOH.error("FileNotFoundException", e);
+                }
+                
+                MCLang.reload();
+                
+                JOptionPane.showMessageDialog(window, "Language File has been saved.", "MineConomy - Save Complete", JOptionPane.PLAIN_MESSAGE);
+            }
+            
+        });
+        
+        langflow.add(savelang);
+        
+        lang.add(langflow, BorderLayout.SOUTH);
+        
+        tabs.addTab("Language", lang);
+    }
+    
     private static void createLog()
     {
         JPanel log = new JPanel();
@@ -790,6 +850,83 @@ public class GUI
         tabs.addTab("Log", log);
     }
     
+    private static void createInfo()
+    {
+        JPanel info = new JPanel();
+        info.setLayout(new BorderLayout());
+        
+        JPanel vinfo = new JPanel();
+        vinfo.setLayout(new GridLayout(7, 2));
+        
+        vinfo.add(new JLabel("MineConomy Version:"));
+        vinfo.add(new JLabel(MineConomy.getVersion()));
+        vinfo.add(new JLabel(""));
+        vinfo.add(new JLabel(""));
+        vinfo.add(new JLabel("Bukkit Version:"));
+        vinfo.add(new JLabel(Bukkit.getBukkitVersion()));
+        vinfo.add(new JLabel(""));
+        vinfo.add(new JLabel(""));
+        vinfo.add(new JLabel("Bukkit Build Version:"));
+        vinfo.add(new JLabel(MineConomy.bukkitVersion));
+        vinfo.add(new JLabel(""));
+        vinfo.add(new JLabel(""));
+        vinfo.add(new JLabel("GUI Version:"));
+        vinfo.add(new JLabel(consoleversion));
+        
+        JPanel infocontain = new JPanel();
+        infocontain.setLayout(new BoxLayout(infocontain, BoxLayout.Y_AXIS));
+        
+        infocontain.add(vinfo);
+        
+        JPanel changeflow = new JPanel();
+        changeflow.setLayout(new FlowLayout());
+        
+        Scanner in = new Scanner(new BufferedReader(new InputStreamReader(
+                Settings.class.getClassLoader().getResourceAsStream(
+                        "me/mjolnir/mineconomy/dev/change_log.txt"))));
+        StringBuffer sb = new StringBuffer();
+        sb.append("<html><br><br><br>=== Change Log ===<br><br>");
+        while (in.hasNextLine())
+        {
+            sb.append(in.nextLine() + "<br>");
+        }
+        sb.append("</html>");
+        changeflow.add(new JLabel(sb.toString()));
+        
+        infocontain.add(changeflow);
+        
+        JScrollPane infoscroll = new JScrollPane(infocontain);
+        infoscroll.setPreferredSize(new Dimension(750, 500));
+        info.add(infoscroll, BorderLayout.CENTER);
+        
+        JPanel infobuttonflow = new JPanel();
+        JButton ticket = new JButton("File a Support Ticket");
+        ticket.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                try
+                {
+                    Desktop.getDesktop().browse(new URI("http://dev.bukkit.org/server-mods/mineconomy/create-ticket/"));
+                }
+                catch (IOException e)
+                {
+                    IOH.error("IOException", e);
+                }
+                catch (URISyntaxException e)
+                {
+                    IOH.error("URISyntaxException", e);
+                }
+            }
+            
+        });
+        infobuttonflow.add(ticket);
+        info.add(infobuttonflow, BorderLayout.SOUTH);
+        
+        tabs.addTab("Info", info);
+    }
+    
     public static void error(String text)
     {
         final JFrame error = new JFrame("MineConomy - Error Report");
@@ -799,10 +936,59 @@ public class GUI
         
         JPanel messageFlow = new JPanel();
         messageFlow.setLayout(new FlowLayout());
-        messageFlow.add(new JLabel("<html><center>MineConomy has encountered this error.<br>"
+        JLabel errorlabel = new JLabel("<html><center>MineConomy has encountered this error.<br>"
                 + "A special team of code monkeys has been dispatched.<br>"
                 + "If you see them, show them this error trace.<br><br>"
-                + "Or you can report it at <a href=\"http://dev.bukkit.org/server-mods/mineconomy\">http://dev.bukkit.org/server-mods/mineconomy</a>.</center></html>"));
+                + "Or you can report it at <a href=\"http://dev.bukkit.org/server-mods/mineconomy\">http://dev.bukkit.org/server-mods/mineconomy</a>.</center></html>");
+        errorlabel.addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent arg0)
+            {
+                try
+                {
+                    Desktop.getDesktop().browse(new URI("http://dev.bukkit.org/server-mods/mineconomy"));
+                }
+                catch (IOException e)
+                {
+                    IOH.error("IOException", e);
+                }
+                catch (URISyntaxException e)
+                {
+                    IOH.error("URISyntaxException", e);
+                }
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent arg0)
+            {
+                // TODO Auto-generated method stub
+                
+            }
+
+            @Override
+            public void mouseExited(MouseEvent arg0)
+            {
+                // TODO Auto-generated method stub
+                
+            }
+
+            @Override
+            public void mousePressed(MouseEvent arg0)
+            {
+                // TODO Auto-generated method stub
+                
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent arg0)
+            {
+                // TODO Auto-generated method stub
+                
+            }
+            
+        });
+        messageFlow.add(errorlabel);
         panel.add(messageFlow);
         
         JTextArea pane = new JTextArea();
@@ -833,6 +1019,29 @@ public class GUI
         buttonFlow.add(close);
         
         panel.add(buttonFlow);
+        
+        JButton report = new JButton("Report");
+        report.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                try
+                {
+                    Desktop.getDesktop().browse(new URI("http://dev.bukkit.org/server-mods/mineconomy/create-ticket/"));
+                }
+                catch (IOException e)
+                {
+                    IOH.error("IOException", e);
+                }
+                catch (URISyntaxException e)
+                {
+                    IOH.error("URISyntaxException", e);
+                }
+            }
+            
+        });
+        buttonFlow.add(report);
         
         pane.select(0, 0);
         

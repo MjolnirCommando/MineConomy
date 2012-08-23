@@ -1,3 +1,12 @@
+- Version 1.5 -
+* Updated to Bukkit 1.3.1-R2.0
+* "Decolored" MCLang Save files (Fix)
+* MySQL Updates
+* GUI Updates
+* Language Updates (Help Menu added, MineConomy tag fix)
+* Minor Bug Fixes (Hardcoded Tag, etc.)
+* Interest/Tax Percent Fix [ (PxR)/100 ]
+
 - Version 1.4 -
 * Updated to Bukkit 1.2.5-R4.0
 * MCFormat class added

@@ -17,27 +17,38 @@ MineConomy is a mid-weight, simple Bukkit Economy Plugin.
 
 If you need more help than is in this readme file, please go to the MineConomy Plugin page (http://dev.bukkit.org/server-mods/mineconomy) for more information and tutorials.
 
-NOTICE: Do NOT edit the accounts.yml or banks.yml save files. This will result in MineConomy corruption.
+YML IS CASE SENSITIVE! Be sure to follow correct case patterns when editting MineConomy configuration files.
+
+NOTICE: Do NOT edit the accounts.yml or banks.yml save files. This may result in MineConomy corruption.
 
 
 
 -= Config File =-
 
-The Config file is in the MineConomy folder as config.yml.
+The Config file is in the MineConomy folder as config.yml. Times default to seconds, but may have the suffixes (s, m, h, d) at the end of a integer. E.G. 100s = 100 seconds, 60m = 60 minutes, 120h = 120 hours, 2d = 2 days.
 
 Balance:
-  Starting Balance:  This will be the amount of money that all accounts will have when they are created.
-  Max Debt:          This is the maximum amount of debt an account can have on your server. Leave at 0 to disallow debt.
-Display GUI:         This may be set to "true" (enabling) or "false" (disabling). Determines whether to show the MineConomy GUI on the server host computer.
+  Starting Balance: 100.0           This will be the amount of money that all accounts will have when they are created.
+  Max Debt: 100.0                   This is the maximum amount of debt an account can have on your server. Leave at 0 to disallow debt.
+Display GUI: true                   This may be set to "true" (enabling) or "false" (disabling). Determines whether to show the MineConomy GUI on the server host computer.
 Interest:
-  Amount:            This is the amount of interest given to all accounts on the server.
-  Interval:          This is the amount of time (in seconds) between when interest will be applied to accounts. This must be a natural number. The smaller this number is, the more strain there will be on the server. Set to 0 to disable interest.
-  Mode:              This is the mode that interest will be taken in. This field can be set as "fixed", which will give accounts the Interest-Amount. This field can also be set as "percent", which will give accounts the percentage from Interest-Amount based on their balance. To have no interest, set this field to "none".
+  Amount: 5                         This is the amount of interest given to all accounts on the server.
+  Interval: 1200s                   This is the amount of time between when interest will be applied to accounts. This must be a natural number. The smaller this number is, the more strain there will be on the server. Set to 0 to disable interest.
+  Mode: percent                     This is the mode that interest will be taken in. This field can be set as "fixed", which will give accounts the Interest-Amount. This field can also be set as "percent", which will give accounts the percentage from Interest-Amount based on their balance. To have no interest, set this field to "none".
 Tax:
-  Amount:            This is the amount of tax taken from all the accounts on the server.
-  Interval:          This is the amount of time (in seconds) between when tax will be applied to accounts. This must be a natural number. The smaller this number is, the more strain there will be on the server. Set to 0 to disable tax.
-  Mode:              This is the mode that tax will be taken in. This field can be set as "fixed", which takes the Interest-Amount. This field can also be set as "percent", which will take the percentage from Interest-Amount from accounts based on their balance. To have no tax, set this field to "none".
-
+  Amount: 10                        This is the amount of tax taken from all the accounts on the server.
+  Interval: 15m                     This is the amount of time between when tax will be applied to accounts. This must be a natural number. The smaller this number is, the more strain there will be on the server. Set to 0 to disable tax.
+  Mode: fixed                       This is the mode that tax will be taken in. This field can be set as "fixed", which takes the Interest-Amount. This field can also be set as "percent", which will take the percentage from Interest-Amount from accounts based on their balance. To have no tax, set this field to "none".
+Database:
+  URL: localhost:3306/              This is the URL and Port of the server to connect to.
+  Name: minecraft                   This is the name of the Database to access.
+  Username: myuser                  This is the username to access the Database with.
+  Password: ******                  This is the password to access the Database with.
+  Type: mysql                       This is the type of Database to use. Set to "mysql" for MySQL Databases or set to "none" to use MineConomy's flatfile YML.
+Lang: en                            This is the last two characters of the language file to use ("en" for English by default).
+Auto-Save Interval: 1h              This is the amount of time between MineConomy auto-saves. A lower time will save more often. Set to 0 to disable.
+iConomy Compatibility Mode: false   This is used to make a converted iConomy save file case insensitive, therefore making it compatible with MineConomy.
+Migration Mode: none                This is the Migration mode that MineConomy will use. Can be set to "iconomy" to migrate iConomy accounts to MineConomy's flatfile YML. Can also be set to "mysql" to migrate MineConomy's flatfile YML to a MySQL Database.
 
 
 -= Currencies File =-
@@ -174,8 +185,6 @@ The lower text field can create an account. Enter the account name and click 'Cr
 
 - Currencies -
 
-NOTE: The GUI for this is not yet fully implemented.
-
 You may edit the Currencies YML file in the text area and click the 'Save' button at the bottom to make changes.
 
 
@@ -194,13 +203,33 @@ Click 'Save' to finalize your changes.
 
 
 
+- Language -
+
+You may edit your selected Language YML file in the text area and click the 'Save' button at the bottom to make changes.
+
+
+
 - Log -
 
 In this window you may view the MineConomy Log file. Click 'Clear Log' to clear the log file.
 
 
 
+- Info -
+
+This window displays the current version information and change log.
+
+
+
 -= Change Log =-
+
+- Version 1.5 -
+* Updated to Bukkit 1.3.1-R2.0
+* "Decolored" MCLang Save files (Fix)
+* MySQL Updates
+* Language Updates (Help Menu added, MineConomy tag fix)
+* Various Bug Fixes (Tax, Hardcoded Tag, etc.)
+* Interest/Tax Percent Fix [ (PxR)/100 ]
 
 - Version 1.4 -
 * Updated to Bukkit 1.2.5-R4.0
@@ -280,4 +309,4 @@ In this window you may view the MineConomy Log file. Click 'Clear Log' to clear 
 * Basic Features Added
 
 
-Last Edited: Fri Jul 13, 2012 @ 3:00PM EST
+Last Edited: Wed Aug 22, 2012 @ 6:00PM EST

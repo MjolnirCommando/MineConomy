@@ -26,9 +26,9 @@ public final class MySqlAccounting extends AccountingBase
         
         try
         {
-            Class.forName(driver).newInstance();
+            Class.forName(driver).newInstance(); //Settings.dburl + ":3306/"
             con = DriverManager
-                    .getConnection("jdbc:mysql://" + Settings.dburl + ":3306/" + Settings.dbname, Settings.dbuser, Settings.dbpass);
+                    .getConnection("jdbc:mysql://" + Settings.dburl + Settings.dbname, Settings.dbuser, Settings.dbpass);
         }
         catch (Exception e)
         {

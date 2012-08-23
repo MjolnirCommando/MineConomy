@@ -2,6 +2,7 @@ package me.mjolnir.mineconomy.internal.commands;
 
 import java.util.ArrayList;
 
+import me.mjolnir.mineconomy.exceptions.MaxDebtException;
 import me.mjolnir.mineconomy.internal.MCCom;
 import me.mjolnir.mineconomy.internal.Settings;
 
@@ -19,8 +20,15 @@ public class Tax
 	    ArrayList<String> accounts = MCCom.getAccounts();
         for(int i = 0; accounts.size() > i; i++)
         {
-            MCCom.setBalance(accounts.get(i), MCCom.getBalance(accounts.get(i))
-                    - Settings.taxAmount);
+            try
+            {
+                MCCom.setBalance(accounts.get(i), MCCom.getBalance(accounts.get(i))
+                        - Settings.taxAmount);
+            }
+            catch (MaxDebtException e)
+            {
+                MCCom.setBalance(accounts.get(i), Settings.maxDebt);
+            }
         }
 	}
 	
@@ -34,13 +42,27 @@ public class Tax
         {
             double balance = MCCom.getBalance(accounts.get(i));
             
-            double b =  Settings.taxAmount / balance;
-            b *= 100;
-            
-            double c = balance - b;
-            c = (double)Math.round(c * 100) / 100;
-            
-            MCCom.setBalance(accounts.get(i), c);
+            if (balance <= 0)
+            {
+                //
+            }
+            else
+            {
+                double b =  Settings.taxAmount * balance;
+                b /= 100;
+                
+                double c = balance - b;
+                c = (double)Math.round(c * 100) / 100;
+                
+                try
+                {
+                    MCCom.setBalance(accounts.get(i), c);
+                }
+                catch (MaxDebtException e)
+                {
+                    MCCom.setBalance(accounts.get(i), Settings.maxDebt);
+                }
+            }
         }
 	}
 }

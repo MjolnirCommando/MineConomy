@@ -48,6 +48,11 @@ public class MineConomy extends JavaPlugin
      */
     public static MineConomy plugin;
 
+    /**
+     * The id of the Bukkit build which is currently running.
+     */
+    public static String bukkitVersion = "";
+    
     private static String    version;
 
     public void onEnable()
@@ -482,8 +487,11 @@ public class MineConomy extends JavaPlugin
         {
             IOH.log("Found non-Bukkit server; Unable to check server version.",
                     IOH.VERY_IMPORTANT);
+            bukkitVersion = "Tekkit?";
             return false;
         }
+        
+        bukkitVersion = v;
 
         if (version >= 2149)
         {

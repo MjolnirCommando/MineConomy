@@ -35,13 +35,20 @@ public class Interest
 		{
 	        double balance = MCCom.getBalance(accounts.get(i));
 	        
-			double b =  Settings.interestAmount / balance;
-			b *= 100;
-			
-			double c = balance + b;
-			c = (double)Math.round(c * 100) / 100;
-			
-			MCCom.setBalance(accounts.get(i), c);
+	        if (balance <= 0)
+	        {
+	            //
+	        }
+	        else
+	        {
+    	        double b =  Settings.interestAmount * balance;
+                b /= 100;
+    			
+    			double c = balance + b;
+    			c = (double)Math.round(c * 100) / 100;
+    			
+    			MCCom.setBalance(accounts.get(i), c);
+			}
 		}
 	}
 }

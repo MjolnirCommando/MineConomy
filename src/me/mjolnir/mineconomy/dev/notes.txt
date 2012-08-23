@@ -1,9 +1,9 @@
-Devs contact MjolnirCommando via MCForums or Bukkit Forums.
+Developers, contact MjolnirCommando via BukkitDev Forums.
 
 IDEA - Add Owners to Banking
 IDEA - Add Currency support to Banking
 IDEA - Add Statuses to Accounts and banking
-IDEA - Add Bank GUI support
+
 IDEA - Groups
 
-UPDATE ALL JAVADOCS
+UPDATE All Javadocs
