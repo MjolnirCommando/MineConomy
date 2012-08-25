@@ -24,7 +24,6 @@ import org.bukkit.inventory.ItemStack;
  */
 public class Balance
 {
-    private static MineConomy plugin;
 
     /**
      * Sends the help message to player.
@@ -298,7 +297,7 @@ public class Balance
                             + MCLang.parse(MCLang.messagePayedTo, args));
                     try
                     {
-                        Player reciever = plugin.getServer()
+                        Player reciever = MineConomy.plugin.getServer()
                                 .getPlayer(toPlayer);
                         
                         String[] args2 = {player.getName(), MCFormat.format(amount), MCCom.getCurrency(player.getName())};

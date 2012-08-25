@@ -102,7 +102,7 @@ public class GUI
     public static JButton                   refreshbutton2;
     public static JTextArea                 logtext;
     
-    private static final String             consoleversion = "3.0";
+    private static final String             consoleversion = "4.0";
 
     /**
      * Creates new GUI object.
@@ -180,11 +180,11 @@ public class GUI
         quitbutton.addActionListener(new QuitListener());
         pane3EastFlow.add(quitbutton);
 
-        refreshbutton = new JButton("Refresh Server");
+        refreshbutton = new JButton("Reload Server");
         refreshbutton.addActionListener(new RefreshListener());
         pane3EastFlow.add(refreshbutton);
         
-        refreshbutton2 = new JButton("Refresh MineConomy");
+        refreshbutton2 = new JButton("Reload MineConomy");
         refreshbutton2.addActionListener(new Refresh2Listener());
         pane3EastFlow.add(refreshbutton2);
 
@@ -319,8 +319,7 @@ public class GUI
     {
         currencies = new JPanel();
 
-        JPanel mine = new JPanel();
-        mine.setLayout(new BoxLayout(mine, BoxLayout.Y_AXIS));
+        currencies.setLayout(new BorderLayout());
 
         StringBuffer sb = new StringBuffer();
 
@@ -347,7 +346,7 @@ public class GUI
         JScrollPane currencyScroll = new JScrollPane(currencyText);
         currencyScroll.setPreferredSize(new Dimension(750, 500));
 
-        mine.add(currencyScroll);
+        currencies.add(currencyScroll, BorderLayout.CENTER);
 
         JButton button = new JButton("Save");
 
@@ -383,9 +382,7 @@ public class GUI
         buttonflow.setLayout(new FlowLayout());
         buttonflow.add(button);
 
-        mine.add(buttonflow);
-
-        currencies.add(mine);
+        currencies.add(buttonflow, BorderLayout.SOUTH);
         
         tabs.addTab("Currencies", currencies);
     }
@@ -673,6 +670,8 @@ public class GUI
         
         JPanel settings9 = new JPanel();
         
+        settings9.setLayout(new BoxLayout(settings9, BoxLayout.X_AXIS));
+        
         settings9.add(new JLabel("Language: "));
         
         final JTextField lang = new JTextField(Settings.lang, 10);
@@ -683,7 +682,9 @@ public class GUI
         
         JPanel settings10 = new JPanel();
         
-        settings10.add(new JLabel("Log Priority"));
+        settings10.add(new JLabel("Log Priority: "));
+        
+        settings10.setLayout(new BoxLayout(settings10, BoxLayout.X_AXIS));
         
         final JLabel prilabel = new JLabel(Settings.logPriority + "");
         
@@ -704,6 +705,125 @@ public class GUI
         
         settingscontent.add(settings10);
         
+        JPanel settings11 = new JPanel();
+        
+        settings11.setLayout(new BoxLayout(settings11, BoxLayout.X_AXIS));
+        
+        settings11.add(new JLabel("Auto-Save Interval (Seconds): "));
+        
+        double ainterval = 100000D;
+        
+        if (Settings.autosaveInterval > ainterval)
+        {
+            ainterval = Settings.autosaveInterval;
+        }
+        
+        final JSpinner autosaveInterval = new JSpinner(new SpinnerNumberModel(Settings.autosaveInterval,
+                0,
+                ainterval,
+                1));
+        
+        settings11.add(autosaveInterval);
+        
+        settingscontent.add(settings11);
+        
+        JPanel settings12 = new JPanel();
+        
+        settings12.add(new JLabel("iConomy Compatibility Mode: "));
+        
+        settings12.setLayout(new BoxLayout(settings12, BoxLayout.X_AXIS));
+        
+        final JComboBox compatBox = new JComboBox(new String[] {"true", "false"});
+        
+        compatBox.setSelectedItem(Settings.iconomy + "");
+        
+        settings12.add(compatBox);
+        
+        settingscontent.add(settings12);
+        
+        JPanel settings13 = new JPanel();
+        
+        settings13.add(new JLabel("Migration Mode: "));
+        
+        settings13.setLayout(new BoxLayout(settings13, BoxLayout.X_AXIS));
+        
+        final JComboBox migrateBox = new JComboBox(new String[] {"none", "iconomy", "mysql"});
+        
+        migrateBox.setSelectedItem(Settings.migrate + "");
+        
+        settings13.add(migrateBox);
+        
+        settingscontent.add(settings13);
+        
+        settingscontent.add(new JLabel(" "));
+        
+        settingscontent.add(new JLabel("Database:"));
+        
+        JPanel settings14 = new JPanel();
+        
+        settings14.setLayout(new BoxLayout(settings14, BoxLayout.X_AXIS));
+        
+        settings14.add(new JLabel("URL: "));
+        
+        final JTextField urlField = new JTextField(Settings.dburl, 10);
+        
+        settings14.add(urlField);
+        
+        settingscontent.add(settings14);
+        
+        JPanel settings15 = new JPanel();
+        
+        settings15.setLayout(new BoxLayout(settings15, BoxLayout.X_AXIS));
+        
+        settings15.add(new JLabel("Name: "));
+        
+        final JTextField nameField = new JTextField(Settings.dbname, 10);
+        
+        settings15.add(nameField);
+        
+        settingscontent.add(settings15);
+        
+        JPanel settings16 = new JPanel();
+        
+        settings16.setLayout(new BoxLayout(settings16, BoxLayout.X_AXIS));
+        
+        settings16.add(new JLabel("Username: "));
+        
+        final JTextField userField = new JTextField(Settings.dbuser, 10);
+        
+        settings16.add(userField);
+        
+        settingscontent.add(settings16);
+        
+        JPanel settings17 = new JPanel();
+        
+        settings17.setLayout(new BoxLayout(settings17, BoxLayout.X_AXIS));
+        
+        settings17.add(new JLabel("Password: "));
+        
+        final JTextField passField = new JTextField(Settings.dbpass, 10);
+        
+        settings17.add(passField);
+        
+        settingscontent.add(settings17);
+        
+        JPanel settings18 = new JPanel();
+        
+        settings18.setLayout(new BoxLayout(settings18, BoxLayout.X_AXIS));
+        
+        settings18.add(new JLabel("Type: "));
+        
+        final JComboBox typeField = new JComboBox(new String[] {"none", "mysql"});
+        
+        typeField.setSelectedItem(Settings.dbtype);
+        
+        settings18.add(typeField);
+        
+        settingscontent.add(settings18);
+        
+        settingscontent.add(new JLabel(" "));
+        settingscontent.add(new JLabel(" "));
+        
         JPanel buttonflow = new JPanel();
         buttonflow.setLayout(new FlowLayout());
         
@@ -718,16 +838,26 @@ public class GUI
                 Settings.maxDebt = Double.parseDouble(maxDebtField.getValue() + "");
                 
                 Settings.interestAmount = Double.parseDouble(interestAmount.getValue() + "");
-                Settings.interestInterval = Integer.parseInt(interestInterval.getValue() + "");
+                Settings.interestInterval = Integer.parseInt((interestInterval.getValue() + "").replace(".", "-").split("-")[0]);
                 Settings.interestMode = interestMode.getSelectedItem().toString();
                 
                 Settings.taxAmount = Double.parseDouble(taxAmount.getValue() + "");
-                Settings.taxInterval = Integer.parseInt(taxInterval.getValue() + "");
+                Settings.taxInterval = Integer.parseInt((taxInterval.getValue() + "").replace(".", "-").split("-")[0]);
                 Settings.taxMode = taxMode.getSelectedItem().toString();
                 
                 Settings.lang = lang.getText();
                 
                 Settings.logPriority = prislide.getValue();
+                
+                Settings.autosaveInterval = Integer.parseInt((autosaveInterval.getValue() + "").replace(".", "-").split("-")[0]);
+                Settings.iconomy = Boolean.parseBoolean((String) compatBox.getSelectedItem());
+                Settings.migrate = (String) migrateBox.getSelectedItem();
+                
+                Settings.dburl = urlField.getText();
+                Settings.dbname = nameField.getText();
+                Settings.dbuser = userField.getText();
+                Settings.dbpass = passField.getText();
+                Settings.dbtype = (String) typeField.getSelectedItem();
                 
                 Settings.save();
                 
@@ -750,6 +880,8 @@ public class GUI
         settings.add(settingscontent);
         
         JScrollPane settingsScroll = new JScrollPane(settings);
+        
+        settingsScroll.setPreferredSize(new Dimension(750, 500));
         
         tabs.addTab("Settings", settingsScroll);
     }

@@ -57,6 +57,8 @@ public class MineConomy extends JavaPlugin
 
     public void onEnable()
     {
+        plugin = this;
+        
         PluginDescriptionFile pdfFile = this.getDescription();
         version = pdfFile.getVersion();
 
