@@ -227,8 +227,9 @@ This window displays the current version information and change log.
 * Updated to Bukkit 1.3.1-R2.0
 * "Decolored" MCLang Save files (Fix)
 * MySQL Updates
+* GUI Updates
 * Language Updates (Help Menu added, MineConomy tag fix)
-* Various Bug Fixes (Tax, Hardcoded Tag, etc.)
+* Minor Bug Fixes (Hardcoded Tag, etc.)
 * Interest/Tax Percent Fix [ (PxR)/100 ]
 
 - Version 1.4 -
