@@ -348,7 +348,7 @@ public class MineConomy extends JavaPlugin
                 {
                     Class.forName(driver).newInstance();
                     con = DriverManager.getConnection("jdbc:mysql://"
-                            + Settings.dburl + ":3306/" + Settings.dbname,
+                            + Settings.dburl + Settings.dbname,
                             Settings.dbuser, Settings.dbpass);
 
                     try
