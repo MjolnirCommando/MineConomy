@@ -200,24 +200,24 @@ public class ChatExecutor implements CommandExecutor
                             warn(player);
                         }
                     }
-                    else if (args[0].equalsIgnoreCase("top"))
-                    {
-                        if (player.hasPermission("mineconomy.balance.top"))
-                        {
-                            try
-                            {
-                                Balance.getTop(player, Integer.parseInt(args[1]));
-                            }
-                            catch (NumberFormatException e)
-                            {
-                                player.sendMessage(MCLang.tag + MCLang.errorInt);
-                            }
-                        }
-                        else
-                        {
-                            warn(player);
-                        }
-                    }
+//                    else if (args[0].equalsIgnoreCase("top"))
+//                    {
+//                        if (player.hasPermission("mineconomy.balance.top"))
+//                        {
+//                            try
+//                            {
+//                                Balance.getTop(player, Integer.parseInt(args[1]));
+//                            }
+//                            catch (NumberFormatException e)
+//                            {
+//                                player.sendMessage(MCLang.tag + MCLang.errorInt);
+//                            }
+//                        }
+//                        else
+//                        {
+//                            warn(player);
+//                        }
+//                    }
                 }
                 else if (args.length == 3)
                 {

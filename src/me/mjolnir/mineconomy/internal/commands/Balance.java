@@ -589,44 +589,11 @@ public class Balance
      * 
      * @param player
      * @param size 
+     * @deprecated
      */
     public static void getTop(Player player, int size)
     {
-        ArrayList<String> accounts = MCCom.getAccounts();
         ArrayList<String> top = new ArrayList<String>();
-        
-        size += 1;
-
-        for (int i = 0; accounts.size() > i; i++)
-        {
-            if (top.size() == 0)
-            {
-                top.add(accounts.get(i));
-            }
-            else
-            {
-                for (int j = 0; top.size() > j; j++)
-                {
-                    if (MCCom.getBalance(accounts.get(i)) > MCCom
-                            .getBalance(top.get(j)))
-                    {
-                        top.add(j, accounts.get(i));
-                        j = top.size() + 100;
-                    }
-                }
-
-                if ((top.size() < size) && !top.contains(accounts.get(i)))
-                {
-                    top.add(accounts.get(i));
-                }
-            }
-        }
-
-        while (!(top.size() < size))
-        {
-            top.remove(top.size() - 1);
-        }
-
         for (int i = 0; top.size() > i; i++)
         {
             player.sendMessage((i + 1) + ") " + top.get(i) + " - "

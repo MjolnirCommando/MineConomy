@@ -61,7 +61,9 @@ public class MineConomy extends JavaPlugin
         
         PluginDescriptionFile pdfFile = this.getDescription();
         version = pdfFile.getVersion();
-
+        
+        IOH.loadLog();
+        
         IOH.log("Enabling plugin...", IOH.INFO);
 
         if (checkVersion())
@@ -444,6 +446,7 @@ public class MineConomy extends JavaPlugin
         Currency.save();
         Settings.save();
         MCLang.save();
+        IOH.saveLog();
     }
 
     /**

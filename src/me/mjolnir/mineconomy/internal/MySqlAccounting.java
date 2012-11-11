@@ -29,32 +29,15 @@ public final class MySqlAccounting extends AccountingBase
             Class.forName(driver).newInstance(); //Settings.dburl + ":3306/"
             con = DriverManager
                     .getConnection("jdbc:mysql://" + Settings.dburl + Settings.dbname, Settings.dbuser, Settings.dbpass);
-        }
-        catch (Exception e)
-        {
-            IOH.error("MySQL Error", e);
-        }
-        
-        try
-        {
             Statement st = con.createStatement();
-            String com = "SELECT * FROM mineconomy_accounts WHERE id = '1'";
+            String com = "CREATE TABLE IF NOT EXISTS `mineconomy_accounts` (`id` int(8) NOT NULL AUTO_INCREMENT, `account` text NOT NULL, `balance` double NOT NULL, `currency` text NOT NULL, `status` text NOT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+            st.execute(com);
+            com = "SELECT * FROM mineconomy_accounts WHERE id = '1'";
             st.execute(com);
         }
         catch (Exception e)
         {
-            try
-            {
-                IOH.log("Accounts Table not found in database!", IOH.INFO);
-                Statement st = con.createStatement();
-                String com = "CREATE TABLE mineconomy_accounts(id int NOT NULL AUTO_INCREMENT, account text NOT NULL, balance double NOT NULL, currency text NOT NULL, status text NOT NULL, PRIMARY KEY (id) )";
-                st.execute(com);
-                IOH.log("Created Accounts Table in database...", IOH.INFO);
-            }
-            catch (SQLException e1)
-            {
-                IOH.error("MySQL Error", e1);
-            }
+            IOH.error("MySQL Error", e);
         }
         
         IOH.log("Accounts loaded from database!", IOH.INFO);

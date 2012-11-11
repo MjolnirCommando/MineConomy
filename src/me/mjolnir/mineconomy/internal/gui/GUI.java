@@ -948,6 +948,7 @@ public class GUI
     
     private static void createLog()
     {
+        IOH.gui = true;
         JPanel log = new JPanel();
         log.setLayout(new BorderLayout());
         
