@@ -54,6 +54,9 @@ public class Currency
         {
             IOH.log("Currency file not found...", IOH.INFO);
             currencies.set("Currencies", "");
+            currencylist.add("Dollars");
+            currencyvalue.put("Dollars", 1.0D);
+            defaultCurrency = "Dollars";
             currencies.set("Physical", "");
             IOH.log("Currency file created!", IOH.INFO);
             save();

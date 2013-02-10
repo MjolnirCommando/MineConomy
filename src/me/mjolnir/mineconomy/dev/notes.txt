@@ -6,8 +6,4 @@ IDEA - Add Statuses to Accounts and banking
 
 IDEA - Groups
 
-ERROR - BANKS
-
-/MC TOP DOES NOT FUNCTION
-
 UPDATE All Javadocs

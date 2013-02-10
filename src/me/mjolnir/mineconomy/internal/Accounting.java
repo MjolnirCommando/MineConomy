@@ -70,6 +70,8 @@ public final class Accounting extends AccountingBase
         accountbalance = new Hashtable<String, Double>();
         accountcurrency = new Hashtable<String, String>();
         accountstatus = new Hashtable<String, String>();
+        
+        hashaccount = new Hashtable<String, String>();
 
         ConfigurationSection cs = accounts.getConfigurationSection("Accounts");
         Object[] t;
@@ -99,6 +101,8 @@ public final class Accounting extends AccountingBase
             accountbalance.put(account, Double.parseDouble(accounts.get("Accounts." + account + ".Balance").toString()));
             accountcurrency.put(account, accounts.get("Accounts." + account + ".Currency").toString());
             accountstatus.put(account, accounts.get("Accounts." + account + ".Status").toString());
+            
+            hashaccount.put(account.toLowerCase(), account);
         }
     }
     
@@ -164,6 +168,7 @@ public final class Accounting extends AccountingBase
         accountbalance.remove(account);
         accountcurrency.remove(account);
         accountstatus.remove(account);
+        hashaccount.remove(account.toLowerCase());
     }
     
     protected void create(String account)
@@ -172,6 +177,7 @@ public final class Accounting extends AccountingBase
         accountbalance.put(account, Settings.startingBalance);
         accountcurrency.put(account, Currency.getDefault());
         accountstatus.put(account, "NORMAL"); //TODO: Add status support
+        hashaccount.put(account.toLowerCase(), account);
     }
     
     protected String getCurrency(String account)

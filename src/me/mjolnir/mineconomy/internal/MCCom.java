@@ -28,6 +28,23 @@ public class MCCom
 	private static MineConomy	plugin	= new MineConomy();
 	private static AccountingBase accounting = null;
 
+	public static String getAccount(String account)
+	{
+	    return getAccount(account, "");
+	}
+	
+	private static String getAccount(String account, String ex1) {
+	    
+	    account = accounting.hashaccount.get(account.toLowerCase());
+	    
+	    if (account != null) {
+	        return account;
+	    } else {
+	        throw new NoAccountException(ex1, "account");
+	    }
+	    
+	}
+	
 	// MineConomy Account Methods ----------------------------------------------
 
 	/**
@@ -39,16 +56,17 @@ public class MCCom
 	 */
 	public static double getBalance(String account)
 	{
-		if (exists(account))
-		{
-			return accounting.getBalance(account);
-		}
-		else
-		{
-			throw new NoAccountException(
-					"MCCom: public double getBalance(String account)",
-					"account");
-		}
+	    return accounting.getBalance(getAccount(account, "MCCom: public double getBalance(String account)"));
+//		if (exists(account))
+//		{
+//			return accounting.getBalance(account);
+//		}
+//		else
+//		{
+//			throw new NoAccountException(
+//					"MCCom: public double getBalance(String account)",
+//					"account");
+//		}
 	}
 
 	/**
@@ -61,8 +79,9 @@ public class MCCom
 	 */
 	public static void setBalance(String account, double balance)
 	{
-		if (exists(account))
-		{
+	    account = getAccount(account, "MCCom: public void setBalance(String account, double balance)");
+//		if (exists(account))
+//		{
 		    if (balance >= -Settings.maxDebt)
 			{
 				accounting.setBalance(account, balance);
@@ -73,13 +92,13 @@ public class MCCom
 						"MCCom: public void setBalance(String account, double balance)",
 						"balance");
 			}
-		}
-		else
-		{
-			throw new NoAccountException(
-					"MCCom: public void setBalance(String account, double balance)",
-					"account");
-		}
+//		}
+//		else
+//		{
+//			throw new NoAccountException(
+//					"MCCom: public void setBalance(String account, double balance)",
+//					"account");
+//		}
 	}
 
 	/**
@@ -103,8 +122,9 @@ public class MCCom
 	 */
 	public static boolean canAfford(String account, double amount)
 	{
-		if (exists(account))
-		{
+	    account = getAccount(account, "MCCom: public boolean canAfford(String account, double amount)");
+//		if (exists(account))
+//		{
 			if (accounting.getBalance(account) + Settings.maxDebt >= amount)
 			{
 				return true;
@@ -113,13 +133,13 @@ public class MCCom
 			{
 				return false;
 			}
-		}
-		else
-		{
-			throw new NoAccountException(
-					"MCCom: public boolean canAfford(String account, double amount)",
-					"account");
-		}
+//		}
+//		else
+//		{
+//			throw new NoAccountException(
+//					"MCCom: public boolean canAfford(String account, double amount)",
+//					"account");
+//		}
 	}
 
 	/**
@@ -132,18 +152,18 @@ public class MCCom
 	public static void add(String account, double amount)
 	{
 		amount = Math.abs(amount);
-		
-		if (exists(account))
-		{
+		account = getAccount(account, "MCCom: public void add(String account, double amount)");
+//		if (exists(account))
+//		{
 			accounting.setBalance(account, accounting.getBalance(account)
 					+ amount);
-		}
-		else
-		{
-			throw new NoAccountException(
-					"MCCom: public void add(String account, double amount)",
-					"account");
-		}
+//		}
+//		else
+//		{
+//			throw new NoAccountException(
+//					"MCCom: public void add(String account, double amount)",
+//					"account");
+//		}
 	}
 
 	/**
@@ -157,9 +177,9 @@ public class MCCom
 	public static void subtract(String account, double amount)
 	{
 		amount = Math.abs(amount);
-		
-		if (exists(account))
-		{
+		account = getAccount(account, "MCCom: public void subtract(String account, double amount)");
+//		if (exists(account))
+//		{
 			if (accounting.getBalance(account) + Settings.maxDebt >= amount)
 			{
 				accounting.setBalance(account, accounting.getBalance(account)
@@ -171,13 +191,13 @@ public class MCCom
 						"MCCom: public void subtract(String account, double amount)",
 						"amount");
 			}
-		}
-		else
-		{
-			throw new NoAccountException(
-					"MCCom: public void subtract(String account, double amount)",
-					"account");
-		}
+//		}
+//		else
+//		{
+//			throw new NoAccountException(
+//					"MCCom: public void subtract(String account, double amount)",
+//					"account");
+//		}
 	}
 
 	/**
@@ -191,18 +211,18 @@ public class MCCom
 	public static void multiply(String account, double multiplier)
 	{
 		multiplier = Math.abs(multiplier);
-		
-		if (exists(account))
-		{
+		account = getAccount(account, "MCCom: public void multiply(String account, double multiplier)");
+//		if (exists(account))
+//		{
 				accounting.setBalance(account, accounting.getBalance(account)
 						* multiplier);
-		}
-		else
-		{
-			throw new NoAccountException(
-					"MCCom: public void multiply(String account, double multiplier)",
-					"account");
-		}
+//		}
+//		else
+//		{
+//			throw new NoAccountException(
+//					"MCCom: public void multiply(String account, double multiplier)",
+//					"account");
+//		}
 	}
 
 	/**
@@ -217,9 +237,9 @@ public class MCCom
 	public static void divide(String account, double divisor)
 	{
 		divisor = Math.abs(divisor);
-		
-		if (exists(account))
-		{
+		account = getAccount(account, "MCCom: public void divide(String account, double divisor)");
+//		if (exists(account))
+//		{
 			if (accounting.getBalance(account) / divisor >= Settings.maxDebt)
 			{
 				if (divisor > 0)
@@ -239,13 +259,13 @@ public class MCCom
 				throw new InsufficientFundsException("MCCom: public void divide(String account, double divisor)",
 						"account");
 			}
-		}
-		else
-		{
-			throw new NoAccountException(
-					"MCCom: public void divide(String account, double divisor)",
-					"account");
-		}
+//		}
+//		else
+//		{
+//			throw new NoAccountException(
+//					"MCCom: public void divide(String account, double divisor)",
+//					"account");
+//		}
 	}
 
 	/**
@@ -256,16 +276,17 @@ public class MCCom
 	 */
 	public static void empty(String account)
 	{
-		if (exists(account))
-		{
+	    account = getAccount(account, "MCCom: public void empty(String account)");
+//		if (exists(account))
+//		{
 			accounting.setBalance(account, 0);
-		}
-		else
-		{
-			throw new NoAccountException(
-					"MCCom: public void empty(String account)",
-					"account");
-		}
+//		}
+//		else
+//		{
+//			throw new NoAccountException(
+//					"MCCom: public void empty(String account)",
+//					"account");
+//		}
 	}
 
 	/**
@@ -276,16 +297,28 @@ public class MCCom
 	 */
 	public static void create(String account)
 	{
-		if (exists(account))
-		{
-			throw new AccountNameConflictException(
-					"MCCom: public void create(String account)",
-					"account");
-		}
-		else
-		{
-			accounting.create(account);
-		}
+	    try
+        {
+            account = getAccount(account, "MCCom: public void create(String account)");
+          throw new AccountNameConflictException(
+          "MCCom: public void create(String account)",
+          "account");
+        }
+        catch (NoAccountException e)
+        {
+            accounting.create(account);
+        }
+	    
+//		if (exists(account))
+//		{
+//			throw new AccountNameConflictException(
+//					"MCCom: public void create(String account)",
+//					"account");
+//		}
+//		else
+//		{
+//			accounting.create(account);
+//		}
 	}
 
 	/**
@@ -296,16 +329,17 @@ public class MCCom
 	 */
 	public static void delete(String account)
 	{
-		if (exists(account))
-		{
+	    account = getAccount(account, "MCCom: public void delete(String account)");
+//		if (exists(account))
+//		{
 			accounting.delete(account);
-		}
-		else
-		{
-			throw new NoAccountException(
-					"MCCom: public void delete(String account)",
-					"account");
-		}
+//		}
+//		else
+//		{
+//			throw new NoAccountException(
+//					"MCCom: public void delete(String account)",
+//					"account");
+//		}
 	}
 	
 	/**
@@ -318,30 +352,48 @@ public class MCCom
 	 */
 	public static void rename(String account, String newAccount)
 	{
-		if (exists(account))
-		{
-			if (exists(newAccount))
-			{
-				throw new AccountNameConflictException("MCCom: public void rename(String account, String newAccount)", "newAccount");
-			}
-			else
-			{
-				double balance = accounting.getBalance(account);
-				String currency = accounting.getCurrency(account);
-				String status = accounting.getStatus(account);
-				accounting.delete(account);
-				accounting.create(newAccount);
-				accounting.setBalance(newAccount, balance);
-				accounting.setCurrency(newAccount, currency);
-				accounting.setStatus(newAccount, status);
-			}
-		}
-		else
-		{
-			throw new NoAccountException(
-					"MCCom: public void rename(String account, String newAccount)",
-					"account");
-		}
+	    account = getAccount(account, "MCCom: public void rename(String account, String newAccount)");
+//		if (exists(account))
+//		{
+	        try
+            {
+                newAccount = getAccount(newAccount, "MCCom: public void rename(String account, String newAccount)");
+                throw new AccountNameConflictException("MCCom: public void rename(String account, String newAccount)", "newAccount");
+            }
+            catch (NoAccountException e)
+            {
+                double balance = accounting.getBalance(account);
+                String currency = accounting.getCurrency(account);
+                String status = accounting.getStatus(account);
+                accounting.delete(account);
+                accounting.create(newAccount);
+                accounting.setBalance(newAccount, balance);
+                accounting.setCurrency(newAccount, currency);
+                accounting.setStatus(newAccount, status);
+            }
+	        
+//			if (exists(newAccount))
+//			{
+//				throw new AccountNameConflictException("MCCom: public void rename(String account, String newAccount)", "newAccount");
+//			}
+//			else
+//			{
+//				double balance = accounting.getBalance(account);
+//				String currency = accounting.getCurrency(account);
+//				String status = accounting.getStatus(account);
+//				accounting.delete(account);
+//				accounting.create(newAccount);
+//				accounting.setBalance(newAccount, balance);
+//				accounting.setCurrency(newAccount, currency);
+//				accounting.setStatus(newAccount, status);
+//			}
+//		}
+//		else
+//		{
+//			throw new NoAccountException(
+//					"MCCom: public void rename(String account, String newAccount)",
+//					"account");
+//		}
 	}
 
 	/**
@@ -357,10 +409,12 @@ public class MCCom
 	public static void transfer(String accountFrom, String accountTo,
 			double amount)
 	{
-		if (exists(accountFrom))
-		{
-			if (exists(accountTo))
-			{
+	    accountFrom = getAccount(accountFrom, "MCCom: public void transfer(String accountFrom, String accountTo, double amount)");
+//		if (exists(accountFrom))
+//		{
+	        accountTo = getAccount(accountTo, "MCCom: public void transfer(String accountFrom, String accountTo, double amount)");
+//			if (exists(accountTo))
+//			{
 				if (accounting.getBalance(accountTo) + Settings.maxDebt >= amount)
 				{
 					accounting.setBalance(accountFrom,
@@ -374,20 +428,20 @@ public class MCCom
 							"MCCom: public void transfer(String accountFrom, String accountTo, double amount)",
 							"amount");
 				}
-			}
-			else
-			{
-				throw new NoAccountException(
-						"MCCom: public void transfer(String accountFrom, String accountTo, double amount)",
-						"accountTo");
-			}
-		}
-		else
-		{
-			throw new NoAccountException(
-					"MCCom: public void transfer(String accountFrom, String accountTo, double amount)",
-					"accountFrom");
-		}
+//			}
+//			else
+//			{
+//				throw new NoAccountException(
+//						"MCCom: public void transfer(String accountFrom, String accountTo, double amount)",
+//						"accountTo");
+//			}
+//		}
+//		else
+//		{
+//			throw new NoAccountException(
+//					"MCCom: public void transfer(String accountFrom, String accountTo, double amount)",
+//					"accountFrom");
+//		}
 	}
 	
 	/**

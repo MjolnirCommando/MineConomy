@@ -115,7 +115,7 @@ public class MineConomy extends JavaPlugin
         if (Settings.autosaveInterval > 0)
         {
             this.getServer().getScheduler()
-                    .scheduleAsyncRepeatingTask(this, new Runnable()
+                    .scheduleSyncRepeatingTask(this, new Runnable()
                     {
                         public void run()
                         {
@@ -135,7 +135,7 @@ public class MineConomy extends JavaPlugin
         if (Settings.interestInterval > 0)
         {
             this.getServer().getScheduler()
-                    .scheduleAsyncRepeatingTask(this, new Runnable()
+                    .scheduleSyncRepeatingTask(this, new Runnable()
                     {
                         public void run()
                         {
@@ -178,7 +178,7 @@ public class MineConomy extends JavaPlugin
         if (Settings.taxInterval > 0)
         {
             this.getServer().getScheduler()
-                    .scheduleAsyncRepeatingTask(this, new Runnable()
+                    .scheduleSyncRepeatingTask(this, new Runnable()
                     {
                         public void run()
                         {
@@ -498,7 +498,7 @@ public class MineConomy extends JavaPlugin
         
         bukkitVersion = v;
 
-        if (version >= 2149)
+        if (version >= 2586)
         {
             IOH.log("Found CraftBukkit [" + v + "]. It is compatible!",
                     IOH.INFO);

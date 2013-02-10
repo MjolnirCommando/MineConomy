@@ -1,10 +1,13 @@
 package me.mjolnir.mineconomy.internal;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 @SuppressWarnings("javadoc")
 public abstract class AccountingBase
 {
+    public Hashtable<String, String> hashaccount;
+    
     public abstract void load();
     
     public abstract void reload();

@@ -4,6 +4,7 @@ import me.mjolnir.mineconomy.MineConomy;
 import me.mjolnir.mineconomy.internal.MCCom;
 import me.mjolnir.mineconomy.internal.MCLang;
 import me.mjolnir.mineconomy.internal.Settings;
+import me.mjolnir.mineconomy.internal.util.Update;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -72,12 +73,18 @@ public class MCListener implements Listener
                 }
 		    }
         }
-        
+		
         if (MCLang.displayWelcome)
         {
             String[] args = {player.getName(), MCCom.getCurrency(player.getName()) + "", MCCom.getBalance(player.getName()) + ""};
             
             player.sendMessage(MCLang.tag + MCLang.parse(MCLang.welcomeMessage, args));
+            player.sendMessage(" ");
+        }
+        
+        if (Settings.ops && player.isOp() && Update.check())
+        {
+            player.sendMessage(MCLang.tag + MCLang.warnOp);
             player.sendMessage(" ");
         }
 	}

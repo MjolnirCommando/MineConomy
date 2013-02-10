@@ -29,6 +29,7 @@ public class Settings
 	public static double	taxAmount = 0.0;
 	public static int		taxInterval = 0;
 	public static boolean	gui = false;
+	public static boolean   ops = true;
 	public static String    lang = "en";
 	public static boolean   iconomy = false;
 	public static int       logPriority = 5;
@@ -54,6 +55,7 @@ public class Settings
 			config.set("Balance.Starting Balance", 0);
 			config.set("Balance.Max Debt", 0);
 			config.set("Display GUI", false);
+			config.set("Warn Ops", true);
 			config.set("Log Priority", 5);
 			config.set("Interest.Amount", 0);
 			config.set("Interest.Interval", "0s");
@@ -91,6 +93,7 @@ public class Settings
 		startingBalance = config.getDouble("Balance.Starting Balance", startingBalance);
         maxDebt = Math.abs(config.getDouble("Balance.Max Debt", maxDebt));
         gui = config.getBoolean("Display GUI", gui);
+        ops = config.getBoolean("Warn Ops", ops);
         interestAmount = config.getDouble("Interest.Amount", interestAmount);
         interestInterval = MCFormat.time(config.getString("Interest.Interval", interestInterval + ""));
         interestMode = config.getString("Interest.Mode", interestMode);
@@ -117,6 +120,7 @@ public class Settings
 	    config.set("Balance.Starting Balance", startingBalance);
         config.set("Balance.Max Debt", maxDebt);
         config.set("Display GUI", gui);
+        config.set("Warn Ops", ops);
         config.set("Interest.Amount", interestAmount);
         config.set("Interest.Interval", interestInterval);
         config.set("Interest.Mode", interestMode);

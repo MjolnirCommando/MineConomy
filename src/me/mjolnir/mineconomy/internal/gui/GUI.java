@@ -305,14 +305,20 @@ public class GUI
         newaccount.setEnabled(true);
         pane2.add(newaccount);
 
+        JPanel createpane = new JPanel();
+        createpane.setLayout(new FlowLayout());
         createbutton = new JButton("Create Account");
         createbutton.setEnabled(true);
         createbutton.addActionListener(new CreateListener());
-        pane2.add(createbutton);
+        createpane.add(createbutton);
+        pane2.add(createpane);
 
-        ImagePanel logo = new ImagePanel("internal/gui/graphics/mineconomy.jpg", 250, 50);
-        logo.setPreferredSize(new Dimension(250, 50));
-        pane2.add(logo);
+        JPanel logopane = new JPanel();
+        logopane.setLayout(new FlowLayout());
+        ImagePanel logo = new ImagePanel("internal/gui/graphics/mineconomy.png", 225, 45);
+        logo.setPreferredSize(new Dimension(225, 45));
+        logopane.add(logo);
+        pane2.add(logopane);
     }
     
     private static void createCurrencies()

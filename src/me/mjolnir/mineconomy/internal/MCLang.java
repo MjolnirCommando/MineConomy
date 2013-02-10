@@ -28,6 +28,7 @@ public class MCLang
     public static String messageWelcomeAccountCreated = "&fYour MineConomy Account has been created!";
     public static String messageAccountBalance = "&fBalance: &a%pos-balance%&c%neg-balance% &f%currency%";
     public static String messageBankBalance = "&f[%bank%] Balance: &a%pos-balance%&c%neg-balance%";
+    public static String warnOp = "&eA new version of MineConomy is available! Download it at http://dev.bukkit.org/server-mods/mineconomy/";
     public static String errorPermissionHaveAccount = "&cYou do not have permission to have an account.";
     public static String errorPermissionGeneric = "&cYou do not have permission to do that.";
     public static String errorInt = "&cYou must enter an integer!";
@@ -94,6 +95,7 @@ public class MCLang
             lang.set("Lang.Message.Welcome Account Created", messageWelcomeAccountCreated);
             lang.set("Lang.Message.Account Balance", messageAccountBalance);
             lang.set("Lang.Message.Bank Balance", messageBankBalance);
+            lang.set("Lang.Op.Update", warnOp);
             lang.set("Lang.Error.Permission.Have Account", errorPermissionHaveAccount);
             lang.set("Lang.Error.Permission.Generic", errorPermissionGeneric);
             lang.set("Lang.Error.Int", errorInt);
@@ -168,6 +170,7 @@ public class MCLang
         messageWelcomeAccountCreated = MCFormat.color(lang.getString("Lang.Message.Welcome Account Created", messageWelcomeAccountCreated));
         messageAccountBalance = MCFormat.color(lang.getString("Lang.Message.Account Balance", messageAccountBalance));
         messageBankBalance = MCFormat.color(lang.getString("Lang.Message.Bank Balance", messageBankBalance));
+        warnOp = MCFormat.color(lang.getString("Lang.Op.Update", warnOp));
         errorPermissionHaveAccount = MCFormat.color(lang.getString("Lang.Error.Permission.Have Account", errorPermissionHaveAccount));
         errorPermissionGeneric = MCFormat.color(lang.getString("Lang.Error.Permission.Generic", errorPermissionGeneric));
         errorInt = MCFormat.color(lang.getString("Lang.Error.Int", errorInt));
@@ -224,6 +227,7 @@ public class MCLang
         lang.set("Lang.Message.Welcome Account Created", MCFormat.decolor(messageWelcomeAccountCreated));
         lang.set("Lang.Message.Account Balance", MCFormat.decolor(messageAccountBalance));
         lang.set("Lang.Message.Bank Balance", MCFormat.decolor(messageBankBalance));
+        lang.set("Lang.Op.Update", MCFormat.decolor(warnOp));
         lang.set("Lang.Error.Permission.Have Account", MCFormat.decolor(errorPermissionHaveAccount));
         lang.set("Lang.Error.Permission.Generic", MCFormat.decolor(errorPermissionGeneric));
         lang.set("Lang.Error.Int", MCFormat.decolor(errorInt));

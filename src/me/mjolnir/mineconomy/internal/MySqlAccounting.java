@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import me.mjolnir.mineconomy.internal.util.IOH;
 
@@ -38,6 +39,29 @@ public final class MySqlAccounting extends AccountingBase
         catch (Exception e)
         {
             IOH.error("MySQL Error", e);
+        }
+        
+        ArrayList<String> result = new ArrayList<String>();
+        
+        try
+        {
+            ResultSet rs = con.createStatement().executeQuery("SELECT account FROM mineconomy_accounts");
+            
+            while (rs.next())
+            {
+                result.add(rs.getString("account"));
+            }
+        }
+        catch (SQLException e)
+        {
+            IOH.error("MySQL Error", e);
+        }
+        
+        hashaccount = new Hashtable<String, String>();
+        
+        for (int i = 0; result.size() > i; i++)
+        {
+            hashaccount.put(result.get(i).toLowerCase(), result.get(i));
         }
         
         IOH.log("Accounts loaded from database!", IOH.INFO);
@@ -110,6 +134,7 @@ public final class MySqlAccounting extends AccountingBase
             Statement st = con.createStatement();
             String com = "DELETE FROM mineconomy_accounts WHERE account = '" + account + "';";
             st.execute(com);
+            hashaccount.remove(account.toLowerCase());
         }
         catch (Exception e)
         {
@@ -124,6 +149,7 @@ public final class MySqlAccounting extends AccountingBase
             Statement st = con.createStatement();
             String com = "INSERT INTO mineconomy_accounts(account, balance, currency, status) VALUES ('" + account + "', " + Settings.startingBalance + ", '" + Currency.getDefault() + "', 'NORMAL')";
             st.execute(com);
+            hashaccount.put(account.toLowerCase(), account);
         }
         catch (Exception e)
         {

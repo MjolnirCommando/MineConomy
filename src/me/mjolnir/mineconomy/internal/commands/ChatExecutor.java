@@ -3,7 +3,6 @@ package me.mjolnir.mineconomy.internal.commands;
 import me.mjolnir.mineconomy.MineConomy;
 import me.mjolnir.mineconomy.internal.MCCom;
 import me.mjolnir.mineconomy.internal.MCLang;
-import me.mjolnir.mineconomy.internal.Settings;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -33,7 +32,10 @@ public class ChatExecutor implements CommandExecutor
             String label, String[] args)
     {
         if (command.getName().equalsIgnoreCase("mc")
-                || command.getName().equalsIgnoreCase("money"))
+                || command.getName().equalsIgnoreCase("money")
+                || command.getName().equalsIgnoreCase("ec")
+                || command.getName().equalsIgnoreCase("econ")
+                || command.getName().equalsIgnoreCase("economy"))
         {
             if (!(sender instanceof Player))
             {
@@ -50,8 +52,7 @@ public class ChatExecutor implements CommandExecutor
                     boolean HasAccount = MCCom.exists(player.getName());
                     if (HasAccount == false)
                     {
-                        MCCom.setBalance(player.getName(),
-                                Settings.startingBalance);
+                        MCCom.create(player.getName());
                     }
                 }
                 else

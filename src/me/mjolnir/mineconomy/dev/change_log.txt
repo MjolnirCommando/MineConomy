@@ -1,5 +1,13 @@
 - Version 1.6 -
+* Updated to Bukkit 1.4.7-R1.0
 * Fixed MySQL Migration Bug
+* Fixed Change Log (MineConomy Loads Normally)
+* REMOVED "/mc top" Command
+* Currency File Created with Default Currency
+* Physical Currencies allow Damage Values
+* Accounts are now case insensitive
+* /money, /mc, /ec, /econ, and /economy are all valid modifiers
+* Option for Ops to be told when MineConomy is out of date
 
 - Version 1.5 -
 * Updated to Bukkit 1.3.1-R2.0

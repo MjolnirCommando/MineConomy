@@ -106,18 +106,27 @@ public class Balance
      */
     public static void get(Player player, String toPlayer)
     {
-        boolean HasAccount = MCCom.exists(toPlayer);
-
-        if (HasAccount)
+        try
         {
+            toPlayer = MCCom.getAccount(toPlayer);
+        }
+        catch (NoAccountException e)
+        {
+            noAccount(player);
+            return;
+        }
+//        boolean HasAccount = MCCom.exists(toPlayer);
+//
+//        if (HasAccount)
+//        {
             String[] args = {toPlayer, MCFormat.format(MCCom.getBalance(toPlayer)), MCCom.getCurrency(toPlayer)};
             
             player.sendMessage(MCLang.tag + MCLang.parse(MCLang.messageGetBalance, args));
-        }
-        else
-        {
-            noAccount(player);
-        }
+//        }
+//        else
+//        {
+//            noAccount(player);
+//        }
     }
 
     /**
@@ -129,10 +138,19 @@ public class Balance
      */
     public static void set(Player player, String toPlayer, double amount)
     {
-        boolean HasAccount = MCCom.exists(toPlayer);
-
-        if (HasAccount)
+        try
         {
+            toPlayer = MCCom.getAccount(toPlayer);
+        }
+        catch (NoAccountException e)
+        {
+            noAccount(player);
+            return;
+        }
+//        boolean HasAccount = MCCom.exists(toPlayer);
+//
+//        if (HasAccount)
+//        {
             try
             {
                 MCCom.setBalance(toPlayer, amount);
@@ -146,11 +164,11 @@ public class Balance
                 player.sendMessage(MCLang.tag + MCLang.errorMaxDebt);
             }
             
-        }
-        else
-        {
-            noAccount(player);
-        }
+//        }
+//        else
+//        {
+//            noAccount(player);
+//        }
     }
 
     /**
@@ -162,23 +180,44 @@ public class Balance
      */
     public static void pay(Player player, String toPlayer, double payAmount)
     {
-        boolean hasAccount = MCCom.exists(player.getName());
-        if (hasAccount)
+        String name = player.getName();
+        try
         {
-            double balance = MCCom.getBalance(player.getName());
+            name = MCCom.getAccount(name);
+        }
+        catch (NoAccountException e)
+        {
+            noAccount(player);
+            return;
+        }
+        
+//        boolean hasAccount = MCCom.exists(player.getName());
+//        if (hasAccount)
+//        {
+            double balance = MCCom.getBalance(name);
             double amount = Math.abs(payAmount);
-            boolean toHasAccount = MCCom.exists(toPlayer);
-            if (toHasAccount == true)
+            
+            try
             {
+                toPlayer = MCCom.getAccount(toPlayer);
+            }
+            catch (NoAccountException e)
+            {
+                noAccount(player);
+                return;
+            }
+//            boolean toHasAccount = MCCom.exists(toPlayer);
+//            if (toHasAccount == true)
+//            {
 
-                if (MCCom.canAfford(player.getName(), amount))
+                if (MCCom.canAfford(name, amount))
                 {
                     double newBalance = balance - amount;
-                    MCCom.setBalance(player.getName(), newBalance);
+                    MCCom.setBalance(name, newBalance);
                     double toBalance = MCCom.getBalance(toPlayer);
 
                     double value = MCCom.getCurrencyValue(MCCom
-                            .getCurrency(player.getName()));
+                            .getCurrency(name));
                     double toValue = MCCom.getCurrencyValue(MCCom
                             .getCurrency(toPlayer));
 
@@ -188,7 +227,7 @@ public class Balance
                     double newToBalance = toBalance + base;
                     MCCom.setBalance(toPlayer, newToBalance);
                     
-                    String[] args = {MCFormat.format(amount), MCCom.getCurrency(player.getName()), toPlayer};
+                    String[] args = {MCFormat.format(amount), MCCom.getCurrency(name), toPlayer};
                     
                     player.sendMessage(MCLang.tag
                             + MCLang.parse(MCLang.messagePayedTo, args));
@@ -197,7 +236,7 @@ public class Balance
                         Player reciever = MineConomy.plugin.getServer()
                                 .getPlayer(toPlayer);
                         
-                        String[] args2 = {player.getName(), MCFormat.format(amount), MCCom.getCurrency(player.getName())};
+                        String[] args2 = {name, MCFormat.format(amount), MCCom.getCurrency(name)};
                         
                         reciever.sendMessage(MCLang.tag
                                 + MCLang.parse(MCLang.messagePayedFrom, args2));
@@ -212,12 +251,12 @@ public class Balance
                     player.sendMessage(MCLang.tag
                             + MCLang.errorYouEnough);
                 }
-            }
-            else
-            {
-                noAccount(player);
-            }
-        }
+//            }
+//            else
+//            {
+//                noAccount(player);
+//            }
+//        }
     }
 
     /**
@@ -229,10 +268,19 @@ public class Balance
      */
     public static void give(Player player, String toPlayer, String payAmount)
     {
-        boolean HasAccount = MCCom.exists(toPlayer);
-
-        if (HasAccount)
+        try
         {
+            toPlayer = MCCom.getAccount(toPlayer);
+        }
+        catch (NoAccountException e)
+        {
+            noAccount(player);
+            return;
+        }
+//        boolean HasAccount = MCCom.exists(toPlayer);
+//
+//        if (HasAccount)
+//        {
             double amount = Double.parseDouble(payAmount);
             amount += MCCom.getBalance(toPlayer);
             MCCom.setBalance(toPlayer, amount);
@@ -240,11 +288,11 @@ public class Balance
             String[] args = {toPlayer, payAmount, MCCom.getCurrency(player.getName())};
             
             player.sendMessage(MCLang.tag + MCLang.parse(MCLang.messageGive, args));
-        }
-        else
-        {
-            noAccount(player);
-        }
+//        }
+//        else
+//        {
+//            noAccount(player);
+//        }
     }
 
     /**
@@ -256,10 +304,19 @@ public class Balance
      */
     public static void take(Player player, String toPlayer, String takeAmount)
     {
-        boolean HasAccount = MCCom.exists(toPlayer);
-
-        if (HasAccount)
+        try
         {
+            toPlayer = MCCom.getAccount(toPlayer);
+        }
+        catch (NoAccountException e)
+        {
+            noAccount(player);
+            return;
+        }
+//        boolean HasAccount = MCCom.exists(toPlayer);
+//
+//        if (HasAccount)
+//        {
             double amount = Double.parseDouble(takeAmount);
             double balance = MCCom.getBalance(toPlayer);
             if (MCCom.canAfford(toPlayer, amount))
@@ -277,11 +334,11 @@ public class Balance
                 player.sendMessage(MCLang.tag
                         + MCLang.parse(MCLang.errorTheyEnough, args));
             }
-        }
-        else
-        {
-            noAccount(player);
-        }
+//        }
+//        else
+//        {
+//            noAccount(player);
+//        }
     }
 
     /**
@@ -292,10 +349,19 @@ public class Balance
      */
     public static void empty(Player player, String toPlayer)
     {
-        boolean HasAccount = MCCom.exists(toPlayer);
-
-        if (HasAccount)
+        try
         {
+            toPlayer = MCCom.getAccount(toPlayer);
+        }
+        catch (NoAccountException e)
+        {
+            noAccount(player);
+            return;
+        }
+//        boolean HasAccount = MCCom.exists(toPlayer);
+//
+//        if (HasAccount)
+//        {
             MCCom.setBalance(toPlayer, 0);
             try
             {
@@ -308,11 +374,11 @@ public class Balance
             {
                 // IGNORE
             }
-        }
-        else
-        {
-            noAccount(player);
-        }
+//        }
+//        else
+//        {
+//            noAccount(player);
+//        }
     }
 
     /**
@@ -345,21 +411,30 @@ public class Balance
      */
     public static void delete(Player player, String toPlayer)
     {
-        boolean HasAccount = MCCom.exists(toPlayer);
-
-        if (HasAccount)
+        try
         {
+            toPlayer = MCCom.getAccount(toPlayer);
+        }
+        catch (NoAccountException e)
+        {
+            noAccount(player);
+            return;
+        }
+//        boolean HasAccount = MCCom.exists(toPlayer);
+//
+//        if (HasAccount)
+//        {
             MCCom.delete(toPlayer);
             
             String[] args = {toPlayer};
             
             player.sendMessage(MCLang.tag
                     + MCLang.parse(MCLang.messageDeleted, args));
-        }
-        else
-        {
-            noAccount(player);
-        }
+//        }
+//        else
+//        {
+//            noAccount(player);
+//        }
     }
 
     /**
@@ -372,10 +447,20 @@ public class Balance
      */
     public static void deposit(Player player, String currency, int amount)
     {
-        boolean HasAccount = MCCom.exists(player.getName());
-
-        if (HasAccount)
+        String name = player.getName();
+        try
         {
+            name = MCCom.getAccount(name);
+        }
+        catch (NoAccountException e)
+        {
+            noAccount(player);
+            return;
+        }
+//        boolean HasAccount = MCCom.exists(player.getName());
+//
+//        if (HasAccount)
+//        {
             if (MCCom.physicalCurrencyExists(currency))
             {
                 if (MCCom.idExists("_exp"))
@@ -384,7 +469,7 @@ public class Balance
 
                     if (currency.equals(expcurrency))
                     {
-                        double balance = MCCom.getBalance(player.getName());
+                        double balance = MCCom.getBalance(name);
 
                         DecimalFormat dec = new DecimalFormat("####");
                         int currentLevel = player.getLevel() * 100;
@@ -396,14 +481,14 @@ public class Balance
                         if (totalXP >= amount)
                         {
                             double value = MCCom.getCurrencyValue(MCCom
-                                    .getAccountCurrency(player.getName()));
+                                    .getAccountCurrency(name));
                             double physvalue = MCCom
                                     .getPhysicalCurrencyValue(expcurrency);
 
                             double base = amount * physvalue;
                             base = base / value;
 
-                            MCCom.setBalance(player.getName(), balance + base);
+                            MCCom.setBalance(name, balance + base);
 
                             int left = Integer.valueOf(totalXP).intValue()
                                     - amount;
@@ -423,48 +508,33 @@ public class Balance
                         }
                     }
                 }
-
-                ItemStack is = new ItemStack(1);
-                ItemStack[] ik = player.getInventory().getContents();
-
-                for (int i = 0; ik.length > i; i++)
+                
+                String id = MCCom.getCurrencyId(currency);
+                ItemStack is;
+                if (id.contains(":"))
                 {
-                    try
-                    {
-                        if (ik[i].getTypeId() == Integer.parseInt(MCCom
-                                .getCurrencyId(currency)))
-                        {
-                            is = ik[i];
-                        }
-                    }
-                    catch (NullPointerException e)
-                    {
-                        //
-                    }
+                    is = new ItemStack(Integer.parseInt(id.split(":")[0]));
+                    is.setDurability(Short.parseShort(id.split(":")[1]));
                 }
-
-                int isamount = is.getAmount();
-                if (isamount >= amount)
+                else
+                {
+                    is = new ItemStack(Integer.parseInt(id));
+                }
+                
+                if (player.getInventory().containsAtLeast(is, amount))
                 {
                     double value = MCCom.getCurrencyValue(MCCom
-                            .getAccountCurrency(player.getName()));
+                            .getAccountCurrency(name));
                     double physvalue = MCCom.getPhysicalCurrencyValue(currency);
 
                     double base = amount * physvalue;
                     base = base / value;
 
-                    MCCom.setBalance(player.getName(),
-                            MCCom.getBalance(player.getName()) + base);
-
-                    player.getInventory().removeItem(is);
-                    is = new ItemStack(Integer.parseInt(MCCom
-                            .getCurrencyId(currency)));
-
-                    if (!(isamount - amount == 0))
-                    {
-                        is.setAmount(isamount - amount);
-                        player.getInventory().addItem(is);
-                    }
+                    MCCom.setBalance(name,
+                            MCCom.getBalance(name) + base);
+                    
+                    is.setAmount(amount);
+                    player.getInventory().removeItem(new ItemStack[] {is});
 
                     return;
                 }
@@ -478,11 +548,11 @@ public class Balance
             {
                 player.sendMessage(MCLang.tag + MCLang.errorNoPhysicalCurrency);
             }
-        }
-        else
-        {
-            noAccount(player);
-        }
+//        }
+//        else
+//        {
+//            noAccount(player);
+//        }
     }
 
     /**
@@ -494,10 +564,20 @@ public class Balance
      */
     public static void withdraw(Player player, String currency, int amount)
     {
-        boolean HasAccount = MCCom.exists(player.getName());
-
-        if (HasAccount)
+        String name = player.getName();
+        try
         {
+            name = MCCom.getAccount(name);
+        }
+        catch (NoAccountException e)
+        {
+            noAccount(player);
+            return;
+        }
+//        boolean HasAccount = MCCom.exists(player.getName());
+//
+//        if (HasAccount)
+//        {
             if (MCCom.physicalCurrencyExists(currency))
             {
                 if (MCCom.idExists("_exp"))
@@ -506,7 +586,7 @@ public class Balance
 
                     if (currency.equals(expcurrency))
                     {
-                        double balance = MCCom.getBalance(player.getName());
+                        double balance = MCCom.getBalance(name);
 
                         DecimalFormat dec = new DecimalFormat("####");
                         int currentLevel = player.getLevel() * 100;
@@ -518,14 +598,14 @@ public class Balance
                         try
                         {
                             double value = MCCom.getCurrencyValue(MCCom
-                                    .getAccountCurrency(player.getName()));
+                                    .getAccountCurrency(name));
                             double physvalue = MCCom
                                     .getPhysicalCurrencyValue(expcurrency);
 
                             double base = amount * physvalue;
                             base = base / value;
 
-                            MCCom.setBalance(player.getName(), balance - base);
+                            MCCom.setBalance(name, balance - base);
 
                             int left = Integer.valueOf(totalXP).intValue()
                                     + amount;
@@ -546,22 +626,31 @@ public class Balance
                     }
                 }
                 
-                double balance = MCCom.getBalance(player.getName());
+                double balance = MCCom.getBalance(name);
 
                 try
                 {
                     double value = MCCom.getCurrencyValue(MCCom
-                            .getAccountCurrency(player.getName()));
+                            .getAccountCurrency(name));
                     double physvalue = MCCom.getPhysicalCurrencyValue(currency);
 
                     double base = amount * physvalue;
                     base = base / value;
 
-                    MCCom.setBalance(player.getName(), balance - base);
+                    MCCom.setBalance(name, balance - base);
 
                     String id = MCCom.getCurrencyId(currency);
 
-                    ItemStack is = new ItemStack(Integer.parseInt(id));
+                    ItemStack is;
+                    if (id.contains(":"))
+                    {
+                        is = new ItemStack(Integer.parseInt(id.split(":")[0]));
+                        is.setDurability(Short.parseShort(id.split(":")[1]));
+                    }
+                    else
+                    {
+                        is = new ItemStack(Integer.parseInt(id));
+                    }
                     is.setAmount(amount);
 
                     player.getInventory().addItem(is);
@@ -577,11 +666,11 @@ public class Balance
             {
                 player.sendMessage(MCLang.tag + MCLang.errorNoPhysicalCurrency);
             }
-        }
-        else
-        {
-            noAccount(player);
-        }
+//        }
+//        else
+//        {
+//            noAccount(player);
+//        }
     }
 
     /**
@@ -611,8 +700,17 @@ public class Balance
      */
     public static void setCurrency(Player player, String toPlayer, String currency)
     {
-        if (MCCom.exists(toPlayer))
+        try
         {
+            toPlayer = MCCom.getAccount(toPlayer);
+        }
+        catch (NoAccountException e)
+        {
+            noAccount(player);
+            return;
+        }
+//        if (MCCom.exists(toPlayer))
+//        {
             if (MCCom.currencyExists(currency))
             {
                 double toBalance = MCCom.getBalance(toPlayer);
@@ -635,11 +733,11 @@ public class Balance
             {
                 player.sendMessage(MCLang.tag + MCLang.errorCurrencyNotFound);
             }
-        }
-        else
-        {
-            noAccount(player);
-        }
+//        }
+//        else
+//        {
+//            noAccount(player);
+//        }
     }
     
     /**
