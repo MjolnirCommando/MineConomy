@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.TreeSet;
 
 import me.mjolnir.mineconomy.internal.util.IOH;
 
@@ -58,10 +59,12 @@ public final class MySqlAccounting extends AccountingBase
         }
         
         hashaccount = new Hashtable<String, String>();
+        treeaccount = new TreeSet<String>();
         
         for (int i = 0; result.size() > i; i++)
         {
             hashaccount.put(result.get(i).toLowerCase(), result.get(i));
+            treeaccount.add(result.get(i).toLowerCase());
         }
         
         IOH.log("Accounts loaded from database!", IOH.INFO);
@@ -135,6 +138,7 @@ public final class MySqlAccounting extends AccountingBase
             String com = "DELETE FROM mineconomy_accounts WHERE account = '" + account + "';";
             st.execute(com);
             hashaccount.remove(account.toLowerCase());
+            treeaccount.remove(account.toLowerCase());
         }
         catch (Exception e)
         {
@@ -150,6 +154,7 @@ public final class MySqlAccounting extends AccountingBase
             String com = "INSERT INTO mineconomy_accounts(account, balance, currency, status) VALUES ('" + account + "', " + Settings.startingBalance + ", '" + Currency.getDefault() + "', 'NORMAL')";
             st.execute(com);
             hashaccount.put(account.toLowerCase(), account);
+            treeaccount.add(account.toLowerCase());
         }
         catch (Exception e)
         {

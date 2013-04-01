@@ -33,17 +33,80 @@ public class MCCom
 	    return getAccount(account, "");
 	}
 	
-	private static String getAccount(String account, String ex1) {
+	private static String getAccount(String account, String ex1)
+	{
+	    if (accounting.hashaccount.contains(account.toLowerCase()))
+        {
+            return accounting.hashaccount.get(account.toLowerCase());
+        }
 	    
-	    account = accounting.hashaccount.get(account.toLowerCase());
+	    Object[] accounts = accounting.treeaccount.toArray();
 	    
-	    if (account != null) {
-	        return account;
-	    } else {
-	        throw new NoAccountException(ex1, "account");
-	    }
-	    
+	    return accounting.hashaccount.get(binarySearch(accounts, account.toLowerCase(), 0, accounts.length - 1, ex1));
 	}
+	
+	private static String binarySearch(Object[] array, String value, int left, int right, String ex1)
+    {
+	    if (left > right)
+        {
+            throw new NoAccountException(ex1, "account");
+        }
+        
+        int middle = (left + right) / 2;
+        
+        try
+        {
+            if (((String) array[middle]).substring(0, value.length()).equals(value))
+            {
+                try
+                {
+                    if (((String) array[middle + 1]).substring(0, value.length()).equals(value))
+                    {
+                        throw new NoAccountException(ex1, "account");
+                    }
+                }
+                catch (IndexOutOfBoundsException e)
+                {
+                    //
+                }
+                
+                try
+                {
+                    if (((String) array[middle - 1]).substring(0, value.length()).equals(value))
+                    {
+                        throw new NoAccountException(ex1, "account");
+                    }
+                }
+                catch (IndexOutOfBoundsException e)
+                {
+                    //
+                }
+                
+                return (String) array[middle];
+            }
+        }
+        catch (StringIndexOutOfBoundsException e)
+        {
+            //
+        }
+        
+        int j = 0;
+
+        while (true)
+        {
+            if (((String) array[middle]).charAt(j) > value.charAt(j))
+            {
+                return binarySearch(array, value, left, middle - 1, ex1);
+            }
+
+            if (((String) array[middle]).charAt(j) < value.charAt(j))
+            {
+                return binarySearch(array, value, middle + 1, right, ex1);
+            }
+
+            j++;
+        }
+    }
 	
 	// MineConomy Account Methods ----------------------------------------------
 
@@ -297,28 +360,16 @@ public class MCCom
 	 */
 	public static void create(String account)
 	{
-	    try
-        {
-            account = getAccount(account, "MCCom: public void create(String account)");
-          throw new AccountNameConflictException(
-          "MCCom: public void create(String account)",
-          "account");
-        }
-        catch (NoAccountException e)
-        {
-            accounting.create(account);
-        }
-	    
-//		if (exists(account))
-//		{
-//			throw new AccountNameConflictException(
-//					"MCCom: public void create(String account)",
-//					"account");
-//		}
-//		else
-//		{
-//			accounting.create(account);
-//		}
+	    if (exists(account))
+		{
+			throw new AccountNameConflictException(
+					"MCCom: public void create(String account)",
+					"account");
+		}
+		else
+		{
+			accounting.create(account);
+		}
 	}
 
 	/**
@@ -463,14 +514,14 @@ public class MCCom
 	 */
 	public static String getAccountCurrency(String account)
 	{
-	    if (accounting.exists(account))
-        {
-            return accounting.getCurrency(account);
-        }
-	    else
-	    {
-	        throw new NoAccountException("MCCom: public static String getCurrency(String account)", "account");
-	    }
+//	    if (accounting.exists(account))
+//        {
+            return accounting.getCurrency(getAccount(account, "MCCom: public static String getCurrency(String account)"));
+//        }
+//	    else
+//	    {
+//	        throw new NoAccountException("MCCom: public static String getCurrency(String account)", "account");
+//	    }
 	}
 	
 	/**
@@ -485,14 +536,14 @@ public class MCCom
 	{
 	    if (Currency.exists(currency))
 	    {
-	        if (accounting.exists(account))
-	        {
-	            accounting.setCurrency(account, currency);
-	        }
-	        else
-	        {
-	            throw new NoAccountException("MCCom: public static void setCurrency(String account, String currency)", "account");
-	        }
+//	        if (accounting.exists(account))
+//	        {
+	            accounting.setCurrency(getAccount(account, "MCCom: public static void setCurrency(String account, String currency)"), currency);
+//	        }
+//	        else
+//	        {
+//	            throw new NoAccountException("MCCom: public static void setCurrency(String account, String currency)", "account");
+//	        }
 	    }
 	    else
 	    {
@@ -594,14 +645,14 @@ public class MCCom
 	 */
 	public static String getCurrency(String account)
 	{
-	    if (accounting.exists(account))
-	    {
-	        return accounting.getCurrency(account);
-	    }
-	    else
-	    {
-	        throw new NoAccountException("MCCom: public static String getCurrency(String account)", "account");
-	    }
+//	    if (accounting.exists(account))
+//	    {
+	        return accounting.getCurrency(getAccount(account, "MCCom: public static String getCurrency(String account)"));
+//	    }
+//	    else
+//	    {
+//	        throw new NoAccountException("MCCom: public static String getCurrency(String account)", "account");
+//	    }
 	}
 	
 	/**

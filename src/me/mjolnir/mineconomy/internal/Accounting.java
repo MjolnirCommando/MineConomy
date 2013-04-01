@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.TreeSet;
 
 import me.mjolnir.mineconomy.MineConomy;
 import me.mjolnir.mineconomy.internal.util.IOH;
@@ -72,6 +73,7 @@ public final class Accounting extends AccountingBase
         accountstatus = new Hashtable<String, String>();
         
         hashaccount = new Hashtable<String, String>();
+        treeaccount = new TreeSet<String>();
 
         ConfigurationSection cs = accounts.getConfigurationSection("Accounts");
         Object[] t;
@@ -103,6 +105,7 @@ public final class Accounting extends AccountingBase
             accountstatus.put(account, accounts.get("Accounts." + account + ".Status").toString());
             
             hashaccount.put(account.toLowerCase(), account);
+            treeaccount.add(account.toLowerCase());
         }
     }
     
@@ -169,6 +172,7 @@ public final class Accounting extends AccountingBase
         accountcurrency.remove(account);
         accountstatus.remove(account);
         hashaccount.remove(account.toLowerCase());
+        treeaccount.remove(account.toLowerCase());
     }
     
     protected void create(String account)
@@ -178,6 +182,7 @@ public final class Accounting extends AccountingBase
         accountcurrency.put(account, Currency.getDefault());
         accountstatus.put(account, "NORMAL"); //TODO: Add status support
         hashaccount.put(account.toLowerCase(), account);
+        treeaccount.add(account.toLowerCase());
     }
     
     protected String getCurrency(String account)

@@ -28,9 +28,8 @@ public class Update
 	{
 		try
 		{
-			URL url = new URL(
-					"http://dl.dropbox.com/u/17845242/MineConomy%20Updates.txt");
-
+			URL url = new URL("http://v.mjcraft.com/mineconomy");
+		    
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					url.openStream()));
 			updateversion = in.readLine();

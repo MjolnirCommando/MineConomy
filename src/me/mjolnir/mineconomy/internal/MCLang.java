@@ -351,13 +351,13 @@ public class MCLang
         else if (message.equals(messageGetBalance) || message.equals(messageSetBalance))
         {
             message = message.replace("%player%", args[0]);
-            message = message.replace("%balance%", args[1]);
+            message = message.replace("%balance%", MCFormat.format(Double.parseDouble(args[1])));
             message = message.replace("%currency%", args[2]);
         }
         else if (message.equals(messageGive))
         {
             message = message.replace("%player%", args[0]);
-            message = message.replace("%amount%", args[1]);
+            message = message.replace("%amount%", MCFormat.format(Double.parseDouble(args[1])));
             message = message.replace("%currency%", args[2]);
         }
         else if (message.equals(errorTheyEnough))
@@ -366,19 +366,19 @@ public class MCLang
         }
         else if (message.equals(messagePayedTo))
         {
-            message = message.replace("%amount%", args[0]);
+            message = message.replace("%amount%", MCFormat.format(Double.parseDouble(args[0])));
             message = message.replace("%currency%", args[1]);
             message = message.replace("%player%", args[2]);
         }
         else if (message.equals(messagePayedFrom))
         {
             message = message.replace("%player%", args[0]);
-            message = message.replace("%amount%", args[1]);
+            message = message.replace("%amount%", MCFormat.format(Double.parseDouble(args[1])));
             message = message.replace("%currency%", args[2]);
         }
         else if (message.equals(messageTook))
         {
-            message = message.replace("%amount%", args[0]);
+            message = message.replace("%amount%", MCFormat.format(Double.parseDouble(args[0])));
             message = message.replace("%currency%", args[1]);
             message = message.replace("%account%", args[2]);
         }
@@ -417,7 +417,7 @@ public class MCLang
         {
             message = message.replace("%bank%", args[0]);
             message = message.replace("%account%", args[1]);
-            message = message.replace("%amount%", args[2]);
+            message = message.replace("%amount%", MCFormat.format(Double.parseDouble(args[2])));
         }
         
         return MCFormat.color(message);

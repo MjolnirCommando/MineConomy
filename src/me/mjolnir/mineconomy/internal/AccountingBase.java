@@ -2,11 +2,14 @@ package me.mjolnir.mineconomy.internal;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.TreeSet;
 
 @SuppressWarnings("javadoc")
 public abstract class AccountingBase
 {
     public Hashtable<String, String> hashaccount;
+    
+    public TreeSet<String> treeaccount;
     
     public abstract void load();
     
