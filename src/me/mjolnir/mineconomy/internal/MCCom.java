@@ -22,12 +22,16 @@ import org.bukkit.plugin.java.JavaPlugin;
  * 
  * @author MjolnirCommando
  */
-@SuppressWarnings("javadoc")
 public class MCCom
 {
 	private static MineConomy	plugin	= new MineConomy();
 	private static AccountingBase accounting = null;
 
+	/**
+	 * Returns account from case-insensitive alias
+	 * @param account
+	 * @return Account name
+	 */
 	public static String getAccount(String account)
 	{
 	    return getAccount(account, "");
@@ -35,14 +39,14 @@ public class MCCom
 	
 	private static String getAccount(String account, String ex1)
 	{
-	    if (accounting.hashaccount.contains(account.toLowerCase()))
+	    if (accounting.hashaccount.containsKey(account.toLowerCase()))
         {
             return accounting.hashaccount.get(account.toLowerCase());
         }
 	    
 	    Object[] accounts = accounting.treeaccount.toArray();
 	    
-	    return accounting.hashaccount.get(binarySearch(accounts, account.toLowerCase(), 0, accounts.length - 1, ex1));
+	    return accounting.hashaccount.get(binarySearch(accounting.treeaccount.toArray(), account.toLowerCase(), 0, accounts.length - 1, ex1));
 	}
 	
 	private static String binarySearch(Object[] array, String value, int left, int right, String ex1)
@@ -94,17 +98,24 @@ public class MCCom
 
         while (true)
         {
-            if (((String) array[middle]).charAt(j) > value.charAt(j))
+            try
             {
-                return binarySearch(array, value, left, middle - 1, ex1);
-            }
+                if (((String) array[middle]).charAt(j) > value.charAt(j))
+                {
+                    return binarySearch(array, value, left, middle - 1, ex1);
+                }
 
-            if (((String) array[middle]).charAt(j) < value.charAt(j))
+                if (((String) array[middle]).charAt(j) < value.charAt(j))
+                {
+                    return binarySearch(array, value, middle + 1, right, ex1);
+                }
+
+                j++;
+            }
+            catch (StringIndexOutOfBoundsException e)
             {
                 return binarySearch(array, value, middle + 1, right, ex1);
             }
-
-            j++;
         }
     }
 	
@@ -629,7 +640,7 @@ public class MCCom
 	 * Returns true if the specified physical currency exists.
 	 * 
 	 * @param currency
-	 * @return
+	 * @return True is specified physical currency exists.
 	 */
 	public static boolean physicalCurrencyExists(String currency)
 	{
@@ -641,7 +652,7 @@ public class MCCom
 	 * 
 	 * @param account
 	 * @throws NoAccountException
-	 * @return
+	 * @return Currency name
 	 */
 	public static String getCurrency(String account)
 	{
@@ -660,7 +671,7 @@ public class MCCom
 	 * 
 	 * @param currency
 	 * @throws NoCurrencyException
-	 * @return
+	 * @return Currency value
 	 */
 	public static double getCurrencyValue(String currency)
 	{
@@ -679,7 +690,7 @@ public class MCCom
      * 
      * @param currency
      * @throws NoCurrencyException
-     * @return
+     * @return Currency value
      */
     public static double getPhysicalCurrencyValue(String currency)
     {
@@ -733,7 +744,6 @@ public class MCCom
 	 * @param bank
 	 * @param account
 	 * @param balance
-	 * @return balance
 	 * @throws NoAccountException
 	 * @throws NoBankException
 	 * @throws MaxDebtException
@@ -775,7 +785,7 @@ public class MCCom
 	 * 
 	 * @param bank
 	 * @param account
-	 * @return
+	 * @return True if the specified account exists in the specified bank.
 	 */
 	public static boolean accountExists(String bank, String account)
 	{
@@ -1204,7 +1214,7 @@ public class MCCom
 	/**
 	 * Returns a list of all existing banks.
 	 * 
-	 * @return
+	 * @return All banks
 	 */
 	public static ArrayList<String> getBanks()
 	{
@@ -1218,7 +1228,7 @@ public class MCCom
 	 * 
 	 * @param account
 	 * @param amount
-	 * @return
+	 * @return True if the specified account has at least the specified amount.
 	 */
 	public static boolean canExternalAfford(String account, double amount)
 	{
@@ -1234,7 +1244,7 @@ public class MCCom
 	 * Returns the balance of the specified account. (Currencies are converted.)
 	 * 
 	 * @param account
-	 * @return
+	 * @return Balance
 	 */
 	public static double getExternalBalance(String account)
 	{
@@ -1267,7 +1277,7 @@ public class MCCom
 	/**
 	 * Returns instance of accounting class to use.
 	 * 
-     * @return
+     * @return Accounting class
      */
 	public static AccountingBase getAccounting()
 	{

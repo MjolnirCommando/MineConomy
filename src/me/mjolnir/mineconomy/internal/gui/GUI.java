@@ -462,10 +462,10 @@ public class GUI
 //        buttonflow.add(button);
 //        
 //        banks.add(buttonflow);
+//        
+//        JScrollPane banksScroll = new JScrollPane(banks);
         
-        JScrollPane banksScroll = new JScrollPane(banks);
-        
-        tabs.addTab("Banks", banksScroll);
+//        tabs.addTab("Banks", banksScroll); TODO
     }
     
     private static void createSettings()
@@ -527,6 +527,58 @@ public class GUI
         settings2.add(maxDebtField);
         
         settingscontent.add(settings2);
+        
+        settingscontent.add(new JLabel(" "));
+        
+        JPanel settings19 = new JPanel();
+        settings19.setLayout(new BoxLayout(settings19, BoxLayout.X_AXIS));
+        
+        settings19.add(new JLabel("Display GUI: "));
+        
+        final JComboBox guiBox = new JComboBox(new String[] {"true", "false"});
+        
+        guiBox.setSelectedItem(Settings.gui + "");
+        
+        settings19.add(guiBox);
+        
+        settingscontent.add(settings19);
+        
+        JPanel settings20 = new JPanel();
+        settings20.setLayout(new BoxLayout(settings20, BoxLayout.X_AXIS));
+        
+        settings20.add(new JLabel("Warn Ops: "));
+        
+        final JComboBox opsBox = new JComboBox(new String[] {"true", "false"});
+        
+        opsBox.setSelectedItem(Settings.ops + "");
+        
+        settings20.add(opsBox);
+        
+        settingscontent.add(settings20);
+        
+        JPanel settings10 = new JPanel();
+        settings10.setLayout(new BoxLayout(settings10, BoxLayout.X_AXIS));
+        
+        settings10.add(new JLabel("Log Priority: "));
+        
+        final JLabel prilabel = new JLabel(Settings.logPriority + "");
+        
+        final JSlider prislide = new JSlider(0, 5, Settings.logPriority);
+        prislide.addChangeListener(new ChangeListener() {
+
+            @Override
+            public void stateChanged(ChangeEvent arg0)
+            {
+                prilabel.setText(prislide.getValue() + "");
+            }
+            
+        });
+        
+        settings10.add(prislide);
+        
+        settings10.add(prilabel);
+        
+        settingscontent.add(settings10);
         
         settingscontent.add(new JLabel(" "));
         
@@ -686,31 +738,6 @@ public class GUI
         
         settingscontent.add(settings9);
         
-        JPanel settings10 = new JPanel();
-        
-        settings10.add(new JLabel("Log Priority: "));
-        
-        settings10.setLayout(new BoxLayout(settings10, BoxLayout.X_AXIS));
-        
-        final JLabel prilabel = new JLabel(Settings.logPriority + "");
-        
-        final JSlider prislide = new JSlider(0, 5, Settings.logPriority);
-        prislide.addChangeListener(new ChangeListener() {
-
-            @Override
-            public void stateChanged(ChangeEvent arg0)
-            {
-                prilabel.setText(prislide.getValue() + "");
-            }
-            
-        });
-        
-        settings10.add(prislide);
-        
-        settings10.add(prilabel);
-        
-        settingscontent.add(settings10);
-        
         JPanel settings11 = new JPanel();
         
         settings11.setLayout(new BoxLayout(settings11, BoxLayout.X_AXIS));
@@ -854,6 +881,8 @@ public class GUI
                 Settings.lang = lang.getText();
                 
                 Settings.logPriority = prislide.getValue();
+                Settings.gui = Boolean.parseBoolean((String) guiBox.getSelectedItem());
+                Settings.ops = Boolean.parseBoolean((String) opsBox.getSelectedItem());
                 
                 Settings.autosaveInterval = Integer.parseInt((autosaveInterval.getValue() + "").replace(".", "-").split("-")[0]);
                 Settings.iconomy = Boolean.parseBoolean((String) compatBox.getSelectedItem());

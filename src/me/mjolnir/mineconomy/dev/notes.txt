@@ -5,5 +5,3 @@ IDEA - Add Currency support to Banking
 IDEA - Add Statuses to Accounts and banking
 
 IDEA - Groups
-
-UPDATE All Javadocs

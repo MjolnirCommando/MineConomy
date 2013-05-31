@@ -119,7 +119,7 @@ public class Balance
 //
 //        if (HasAccount)
 //        {
-            String[] args = {toPlayer, MCFormat.format(MCCom.getBalance(toPlayer)), MCCom.getCurrency(toPlayer)};
+            String[] args = {toPlayer, MCCom.getBalance(toPlayer) + "", MCCom.getCurrency(toPlayer)};
             
             player.sendMessage(MCLang.tag + MCLang.parse(MCLang.messageGetBalance, args));
 //        }
@@ -155,7 +155,7 @@ public class Balance
             {
                 MCCom.setBalance(toPlayer, amount);
                 
-                String[] args = {toPlayer, MCFormat.format(MCCom.getBalance(toPlayer)), MCCom.getCurrency(player.getName())};
+                String[] args = {toPlayer, MCCom.getBalance(toPlayer) + "", MCCom.getCurrency(player.getName())};
                 
                 player.sendMessage(MCLang.tag + MCLang.parse(MCLang.messageSetBalance, args));
             }
@@ -227,7 +227,7 @@ public class Balance
                     double newToBalance = toBalance + base;
                     MCCom.setBalance(toPlayer, newToBalance);
                     
-                    String[] args = {MCFormat.format(amount), MCCom.getCurrency(name), toPlayer};
+                    String[] args = {amount + "", MCCom.getCurrency(name), toPlayer};
                     
                     player.sendMessage(MCLang.tag
                             + MCLang.parse(MCLang.messagePayedTo, args));
@@ -236,7 +236,7 @@ public class Balance
                         Player reciever = MineConomy.plugin.getServer()
                                 .getPlayer(toPlayer);
                         
-                        String[] args2 = {name, MCFormat.format(amount), MCCom.getCurrency(name)};
+                        String[] args2 = {name, amount + "", MCCom.getCurrency(name)};
                         
                         reciever.sendMessage(MCLang.tag
                                 + MCLang.parse(MCLang.messagePayedFrom, args2));
@@ -323,7 +323,7 @@ public class Balance
             {
                 MCCom.setBalance(toPlayer, balance - amount);
                 
-                String[] args = {MCFormat.format(amount), MCCom.getCurrency(player.getName()), toPlayer};
+                String[] args = {amount + "", MCCom.getCurrency(player.getName()), toPlayer};
                 
                 player.sendMessage(MCLang.tag
                         + MCLang.parse(MCLang.messageTook, args));
@@ -866,7 +866,7 @@ public class Balance
         try
         {
             double balance = MCCom.getBalance(bank, account);
-            String[] args = {account, bank, MCFormat.format(balance)};
+            String[] args = {account, bank, balance + ""};
             player.sendMessage(MCLang.tag + MCLang.parse(MCLang.messageGetBankAccount, args));
         }
         catch (NoAccountException e)
@@ -892,7 +892,7 @@ public class Balance
         try
         {
             MCCom.setBalance(bank, account, balance);
-            String[] args = {account, bank, MCFormat.format(balance)};
+            String[] args = {account, bank, balance + ""};
             player.sendMessage(MCLang.tag + MCLang.parse(MCLang.messageSetBankAccount, args));
         }
         catch (NoAccountException e)
@@ -939,7 +939,7 @@ public class Balance
             
             MCCom.setBalance(bank, player.getName(), newToBalance);
             
-            String[] args = {bank, player.getName(), MCFormat.format(amount)};
+            String[] args = {bank, player.getName(), amount + ""};
             player.sendMessage(MCLang.tag + MCLang.parse(MCLang.messageBankAccountDeposit, args));
         }
         catch (NoAccountException e)
@@ -994,7 +994,7 @@ public class Balance
             MCCom.setBalance(player.getName(), newToBalance);
             
             
-            String[] args = {bank, player.getName(), MCFormat.format(amount)};
+            String[] args = {bank, player.getName(), amount + ""};
             player.sendMessage(MCLang.tag + MCLang.parse(MCLang.messageBankAccountWithdraw, args));
         }
         catch (NoAccountException e)

@@ -31,6 +31,8 @@ Balance:
   Starting Balance: 100.0           This will be the amount of money that all accounts will have when they are created.
   Max Debt: 100.0                   This is the maximum amount of debt an account can have on your server. Leave at 0 to disallow debt.
 Display GUI: true                   This may be set to "true" (enabling) or "false" (disabling). Determines whether to show the MineConomy GUI on the server host computer.
+Warn Ops: true                      This may be set to "true" (enabling) or "false" (disabling). Tells OPs when a new version of MineConomy is available.
+Log Priority: 5                     This may be a number (1-5) which corresponds to the priority level message that can be printed. A "1" allows only very important messages while a "5" allows all messages.
 Interest:
   Amount: 5                         This is the amount of interest given to all accounts on the server.
   Interval: 1200s                   This is the amount of time between when interest will be applied to accounts. This must be a natural number. The smaller this number is, the more strain there will be on the server. Set to 0 to disable interest.
@@ -224,16 +226,15 @@ This window displays the current version information and change log.
 -= Change Log =-
 
 - Version 1.6 -
-* Updated to Bukkit 1.4.7-R1.0
+* Updated to Bukkit 1.5.2-R1.0
 * Fixed MySQL Migration Bug
 * Fixed Change Log (MineConomy Loads Normally)
 * REMOVED "/mc top" Command
 * Currency File Created with Default Currency
 * Physical Currencies allow Damage Values
 * Accounts are now case insensitive and can be aliased
-* /money, /mc, /ec, /econ, and /economy are all valid modifiers
 * Option for Ops to be told when MineConomy is out of date
-* Console Support
+* Console Support for commands
 
 - Version 1.5 -
 * Updated to Bukkit 1.3.1-R2.0

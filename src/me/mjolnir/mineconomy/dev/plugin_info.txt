@@ -1,7 +1,7 @@
 .: MineConomy - Plugin Developer Info :.
 
 Version:                        1.6 STABLE
-Time of Last Edit:              Sat FEB 9, 2013 @ 5:00PM EST
+Time of Last Edit:              Sat MAY 30, 2013 @ 5:00PM EST
 
 Dev Page:                       http://dev.bukkit.org/server-mods/MineConomy
 

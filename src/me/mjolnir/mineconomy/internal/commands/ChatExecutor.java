@@ -36,10 +36,7 @@ public class ChatExecutor implements CommandExecutor
             String label, String[] args)
     {
         if (command.getName().equalsIgnoreCase("mc")
-                || command.getName().equalsIgnoreCase("money")
-                || command.getName().equalsIgnoreCase("ec")
-                || command.getName().equalsIgnoreCase("econ")
-                || command.getName().equalsIgnoreCase("economy"))
+                || command.getName().equalsIgnoreCase("money"))
         {
             if (!(sender instanceof Player))
             {
@@ -62,6 +59,11 @@ public class ChatExecutor implements CommandExecutor
                             MineConomy.reload();
                             sender.sendMessage(MCLang.tag + ChatColor.BLACK
                                     + "Reload complete!");
+                        }
+                        else
+                        {
+                            sender.sendMessage(MCLang.tag
+                                    + MCLang.errorCommandRecognition);
                         }
                     }
                     else if (args.length == 2)
@@ -116,6 +118,11 @@ public class ChatExecutor implements CommandExecutor
                                 sender.sendMessage(MCLang.tag
                                         + MCLang.errorNoAccount);
                             }
+                        }
+                        else
+                        {
+                            sender.sendMessage(MCLang.tag
+                                    + MCLang.errorCommandRecognition);
                         }
                     }
                     else if (args.length == 3)
@@ -185,6 +192,11 @@ public class ChatExecutor implements CommandExecutor
                                 sender.sendMessage(MCLang.tag
                                         + MCLang.parse(MCLang.errorTheyEnough, new String[] {MCCom.getAccount(args[1])}));
                             }
+                        }
+                        else
+                        {
+                            sender.sendMessage(MCLang.tag
+                                    + MCLang.errorCommandRecognition);
                         }
                     }
                     else
@@ -290,6 +302,11 @@ public class ChatExecutor implements CommandExecutor
                                 warn(player);
                             }
                         }
+                        else
+                        {
+                            player.sendMessage(MCLang.tag
+                                    + MCLang.errorCommandRecognition);
+                        }
                     }
                     else if (args.length == 2)
                     {
@@ -390,6 +407,11 @@ public class ChatExecutor implements CommandExecutor
 //                        warn(player);
 //                        }
 //                        }
+                        else
+                        {
+                            player.sendMessage(MCLang.tag
+                                    + MCLang.errorCommandRecognition);
+                        }
                     }
                     else if (args.length == 3)
                     {
@@ -508,6 +530,11 @@ public class ChatExecutor implements CommandExecutor
                             {
                                 warn(player);
                             }
+                        }
+                        else
+                        {
+                            player.sendMessage(MCLang.tag
+                                    + MCLang.errorCommandRecognition);
                         }
                     }
                     else

@@ -193,7 +193,7 @@ public class IOH
                 out.close();
             }
 
-            final char[] raw = new char[8192];
+            final char[] raw = new char[65536];
             FileReader reader = new FileReader(logFile);
             log = new StringBuffer();
             long position = logFile.length() - raw.length;
