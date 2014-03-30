@@ -415,7 +415,7 @@ public class MineConomy extends JavaPlugin
     private static void load()
     {
         Settings.load();
-        MCCom.initialize(this);
+        MCCom.initialize();
         MCCom.getAccounting().load();
         Banking.load();
         Currency.load();

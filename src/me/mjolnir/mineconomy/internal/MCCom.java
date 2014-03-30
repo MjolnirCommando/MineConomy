@@ -24,7 +24,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class MCCom
 {
-	private static MineConomy	plugin;
+	public static MineConomy	plugin;
 	private static AccountingBase accounting = null;
 
 	/**
@@ -1287,9 +1287,9 @@ public class MCCom
 	/**
 	 * Initializes MCCom base classes. (Required for SQL)
 	 */
-	public static void initialize(MineConomy plugin)
+	public static void initialize()
     {
-    	this.plugin = plugin;
+            MCCom.plugin = MineConomy.plugin;
 	    if (Settings.dbtype.equalsIgnoreCase("mysql"))
 	    {
 	        IOH.log("MySQL is enabled for Accounts.", IOH.INFO);
